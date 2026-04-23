@@ -9,6 +9,10 @@ jobs:
   run:
     runs-on: ubuntu-latest
     if: ${{ github.event_name == 'push' && contains(github.ref, 'refs/heads/main') && github.run_number > 1 }}
+    strategy:
+      fail-fast: false
+      matrix:
+        project: [docs-starter, versioning]
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -17,6 +21,7 @@ jobs:
         uses: fern-api/setup-fern-cli@v1
 
       - name: Publish Docs
+        working-directory: ${{ matrix.project }}
         env:
           FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
         run: fern generate --docs --log-level debug
