@@ -1,0 +1,20 @@
+---
+title: Quickstart
+subtitle: Get started with the Latest version
+slug: quickstart
+---
+
+Install the latest SDK:
+
+```bash
+npm install @example/sdk
+```
+
+Then make your first request:
+
+```ts
+import { Client } from "@example/sdk";
+
+const client = new Client({ apiKey: process.env.API_KEY });
+await client.widgets.list();
+```

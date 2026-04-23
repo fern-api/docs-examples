@@ -1,0 +1,11 @@
+# yaml-language-server: $schema=https://schema.buildwithfern.dev/docs-yml.json
+
+navigation:
+  - section: v1 (Legacy)
+    contents:
+      - page: Welcome
+        path: ./v1/pages/welcome.mdx
+      - page: Upgrade notice
+        path: ./v1/pages/upgrade-notice.mdx
+      - page: Shared resource
+        path: ../shared-pages/shared-resource.mdx

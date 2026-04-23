@@ -1,0 +1,20 @@
+---
+title: Quickstart
+subtitle: Get started with v2
+slug: quickstart
+---
+
+Install the v2 SDK:
+
+```bash
+npm install @example/sdk@2
+```
+
+Then make your first request:
+
+```ts
+import { ExampleClient } from "@example/sdk";
+
+const client = new ExampleClient({ token: process.env.API_TOKEN });
+await client.widgets.list();
+```

@@ -1,0 +1,14 @@
+---
+title: Authentication
+subtitle: Authenticate requests with an API key
+slug: guides/authentication
+---
+
+Every request must include your API key in the `Authorization` header:
+
+```bash
+curl https://api.example.com/v4/widgets \
+  -H "Authorization: Bearer $API_KEY"
+```
+
+Keys are scoped to a single environment. Rotate them from the dashboard.

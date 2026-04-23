@@ -1,0 +1,20 @@
+# yaml-language-server: $schema=https://schema.buildwithfern.dev/docs-yml.json
+
+navigation:
+  - section: Get started
+    contents:
+      - page: Welcome
+        path: ./latest/pages/welcome.mdx
+      - page: Quickstart
+        path: ./latest/pages/quickstart.mdx
+  - section: Guides
+    contents:
+      - page: Authentication
+        path: ./latest/pages/guides/authentication.mdx
+      - page: Webhooks
+        path: ./latest/pages/guides/webhooks.mdx
+  - api: API Reference
+  - section: Resources
+    contents:
+      - page: Shared resource
+        path: ../shared-pages/shared-resource.mdx
