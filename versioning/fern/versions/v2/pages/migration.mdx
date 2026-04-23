@@ -1,0 +1,30 @@
+---
+title: Migrating to Latest
+subtitle: Upgrade from v2 to the Latest version
+slug: migration
+---
+
+<Warning>
+  v2 is deprecated. Plan to migrate to [Latest](/welcome) before the next major release.
+</Warning>
+
+## What changed
+
+- `ExampleClient` was renamed to `Client`.
+- The `token` constructor option was renamed to `apiKey`.
+- Webhook signatures moved from `x-v2-signature` to `x-example-signature`.
+
+## Update your code
+
+```diff
+- import { ExampleClient } from "@example/sdk";
+- const client = new ExampleClient({ token: process.env.API_TOKEN });
++ import { Client } from "@example/sdk";
++ const client = new Client({ apiKey: process.env.API_KEY });
+```
+
+Then bump the SDK:
+
+```bash
+npm install @example/sdk@latest
+```

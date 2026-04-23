@@ -1,0 +1,17 @@
+# yaml-language-server: $schema=https://schema.buildwithfern.dev/docs-yml.json
+
+navigation:
+  - section: Introduction
+    contents:
+      - page: Welcome
+        path: ./v2/pages/welcome.mdx
+      - page: Quickstart
+        path: ./v2/pages/quickstart.mdx
+  - section: Migration
+    contents:
+      - page: Migrating to Latest
+        path: ./v2/pages/migration.mdx
+  - section: Resources
+    contents:
+      - page: Shared resource
+        path: ../shared-pages/shared-resource.mdx

@@ -1,0 +1,26 @@
+# yaml-language-server: $schema=https://schema.buildwithfern.dev/docs-yml.json
+
+instances:
+  - url: versioning.docs.buildwithfern.com
+
+title: Fern Docs Versioned Example
+
+versions:
+  - display-name: Latest          # shown in the dropdown; default version (unversioned URLs)
+    path: ./versions/latest.yml
+    availability: ga
+  - display-name: v2
+    path: ./versions/v2.yml
+    availability: deprecated
+  - display-name: v1 (Legacy)
+    path: ./versions/v1.yml
+    slug: v1
+    availability: deprecated
+
+colors:
+  accent-primary:
+    dark: "#70E155"
+    light: "#008700"
+  background:
+    dark: "#111113"
+    light: "#FFFFFF"
