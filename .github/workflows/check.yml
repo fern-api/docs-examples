@@ -9,6 +9,10 @@ on:
 jobs:
   run:
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        project: [docs-starter, versioning]
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -17,4 +21,5 @@ jobs:
         uses: fern-api/setup-fern-cli@v1
 
       - name: Check API is valid
+        working-directory: ${{ matrix.project }}
         run: fern check
