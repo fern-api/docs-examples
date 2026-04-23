@@ -9,7 +9,7 @@ Example Fern docs projects. Each top-level folder is a self-contained example wi
 | Example | Description | Live demo |
 | --- | --- | --- |
 | [`docs-starter`](./docs-starter) | Minimal starter project | [docs-starter.docs.buildwithfern.com](https://docs-starter.docs.buildwithfern.com) |
-| [`docs-versioned`](./docs-versioned) | Versioned site with a version dropdown and a shared page | [versioning.docs.buildwithfern.com](https://versioning.docs.buildwithfern.com) |
+| [`versioning`](./docs-versioned) | Versioned site with a version dropdown and a shared page | [versioning.docs.buildwithfern.com](https://versioning.docs.buildwithfern.com) |
 
 ## Use an example
 
