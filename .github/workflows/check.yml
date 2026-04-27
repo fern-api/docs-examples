@@ -12,7 +12,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        project: [docs-starter, versioning]
+        project: [docs-starter, i18n, versioning]
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
