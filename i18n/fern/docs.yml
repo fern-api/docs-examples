@@ -5,8 +5,14 @@ instances:
 
 title: Fern Docs i18n Example
 
+logo:
+  light: images/logo-light.svg
+  dark: images/logo-dark.svg
+  height: 32
+
 translations:
   - lang: en
+  - lang: fr
   - lang: ja
 
 navigation:
