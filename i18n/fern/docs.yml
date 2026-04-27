@@ -1,0 +1,22 @@
+# yaml-language-server: $schema=https://schema.buildwithfern.dev/docs-yml.json
+
+instances:
+  - url: i18n.docs.buildwithfern.com
+
+title: Fern Docs i18n Example
+
+logo:
+  light: images/logo-light.svg
+  dark: images/logo-dark.svg
+  height: 32
+
+translations:
+  - lang: en
+  - lang: fr
+  - lang: ja
+
+navigation:
+  - page: Introduction
+    path: pages/introduction.mdx
+  - page: Getting Started
+    path: pages/getting-started.mdx
