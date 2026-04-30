@@ -1,0 +1,23 @@
+---
+title: Climate control
+subtitle: Configure and tune environmental parameters.
+---
+
+Each greenhouse zone supports independent climate profiles. A climate profile defines the target ranges for temperature, humidity, light intensity, and CO2 concentration.
+
+## Creating a climate profile
+
+```bash
+curl -X POST https://api.plantstore.com/greenhouses/{greenhouseId}/profiles \
+  -H "Authorization: Bearer $TOKEN" \
+  -d '{
+    "name": "tropical",
+    "temperature": { "min": 24, "max": 30, "unit": "celsius" },
+    "humidity": { "min": 70, "max": 85, "unit": "percent" },
+    "light_hours": 14
+  }'
+```
+
+## Scheduling
+
+Climate profiles can follow a schedule to simulate day/night cycles or seasonal transitions. Use `PATCH /greenhouses/{greenhouseId}/profiles/{profileId}/schedule` to attach a cron-based schedule.

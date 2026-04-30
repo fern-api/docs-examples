@@ -1,0 +1,21 @@
+---
+title: Seed catalog
+subtitle: Search and filter the full seed inventory.
+---
+
+The seed catalog contains every variety available through Plant Store. Each entry includes the plant family, optimal climate zone, expected germination time, and current stock levels.
+
+## Filtering
+
+Filter seeds by any combination of attributes:
+
+| Attribute | Example |
+| --- | --- |
+| Climate zone | `zone:9b` |
+| Plant family | `family:solanaceae` |
+| Germination time | `germ:<14d` |
+| Availability | `in_stock:true` |
+
+## Requesting new varieties
+
+Submit a request through the supplier portal at `POST /plants/request` with the desired species name and preferred supplier. The Seeds team reviews requests weekly.

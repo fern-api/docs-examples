@@ -1,0 +1,19 @@
+# yaml-language-server: $schema=https://schema.buildwithfern.dev/docs-yml.json
+
+instances:
+  - url: multi-source.docs.buildwithfern.com/home
+    multi-source: true
+
+title: Plant Store
+
+colors:
+  accent-primary:
+    dark: "#70E155"
+    light: "#008700"
+  background:
+    dark: "#111113"
+    light: "#FFFFFF"
+
+navigation:
+  - page: Home
+    path: ./pages/home.mdx
