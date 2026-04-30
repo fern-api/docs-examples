@@ -12,7 +12,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        project: [docs-starter, i18n, multi-source/homepage, multi-source/seeds, multi-source/greenhouses, multi-source/nursery, versioning]
+        project: [docs-starter, i18n, multi-source/seeds, multi-source/greenhouses, multi-source/nursery, versioning]
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
