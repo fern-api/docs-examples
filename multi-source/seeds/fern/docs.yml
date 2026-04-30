@@ -1,0 +1,28 @@
+# yaml-language-server: $schema=https://schema.buildwithfern.dev/docs-yml.json
+
+instances:
+  - url: multi-source.docs.buildwithfern.com/seeds
+    multi-source: true
+
+title: Seeds
+
+colors:
+  accent-primary:
+    dark: "#70E155"
+    light: "#008700"
+  background:
+    dark: "#111113"
+    light: "#FFFFFF"
+
+logo:
+  dark: ./assets/logo-dark.svg
+  light: ./assets/logo-light.svg
+  height: 20
+
+navigation:
+  - section: Getting started
+    contents:
+      - page: Overview
+        path: ./pages/overview.mdx
+      - page: Seed catalog
+        path: ./pages/seed-catalog.mdx

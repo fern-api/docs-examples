@@ -10,6 +10,7 @@ Example Fern docs projects. Each top-level folder is a self-contained example wi
 | --- | --- | --- |
 | [`docs-starter`](./docs-starter) | Minimal starter project | [docs-starter.docs.buildwithfern.com](https://docs-starter.docs.buildwithfern.com) |
 | [`i18n`](./i18n) | Multi-language docs with English + Japanese translations | [i18n.docs.buildwithfern.com](https://i18n.docs.buildwithfern.com) |
+| [`multi-source`](./multi-source) | Multiple teams publishing to one domain from separate repos | [multi-source.docs.buildwithfern.com](https://multi-source.docs.buildwithfern.com) |
 | [`versioning`](./docs-versioned) | Versioned site with a version dropdown and a shared page | [versioning.docs.buildwithfern.com](https://versioning.docs.buildwithfern.com) |
 
 ## Use an example
