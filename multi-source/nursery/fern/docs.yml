@@ -1,18 +1,17 @@
 # yaml-language-server: $schema=https://schema.buildwithfern.dev/docs-yml.json
 
+global-theme: plantstore-theme
+
 instances:
   - url: multi-source.docs.buildwithfern.com/nursery
     multi-source: true
 
-title: Plant Store — Nursery
+title: Nursery
 
-colors:
-  accent-primary:
-    dark: "#70E155"
-    light: "#008700"
-  background:
-    dark: "#111113"
-    light: "#FFFFFF"
+navbar-links:
+  - type: minimal
+    text: Home
+    href: /
 
 navigation:
   - section: Getting started

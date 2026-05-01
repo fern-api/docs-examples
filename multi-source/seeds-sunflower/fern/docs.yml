@@ -3,26 +3,23 @@
 global-theme: plantstore-theme
 
 instances:
-  - url: multi-source.docs.buildwithfern.com/seeds
+  - url: multi-source.docs.buildwithfern.com/seeds/sunflower
     multi-source: true
 
-title: Seeds
+title: Seeds — Sunflower
 
 navbar-links:
   - type: minimal
     text: Home
     href: /
   - type: minimal
-    text: Sunflower
-    href: /seeds/sunflower
-  - type: minimal
-    text: Tomato
-    href: /seeds/tomato
+    text: Seeds
+    href: /seeds
 
 navigation:
-  - section: Getting started
+  - section: Sunflower seeds
     contents:
       - page: Overview
         path: ./pages/overview.mdx
-      - page: Seed catalog
-        path: ./pages/catalog.mdx
+      - page: Planting guide
+        path: ./pages/planting.mdx

@@ -1,18 +1,51 @@
 # yaml-language-server: $schema=https://schema.buildwithfern.dev/docs-yml.json
 
+global-theme: plantstore-theme
+
 instances:
   - url: multi-source.docs.buildwithfern.com
     multi-source: true
 
-title: Plant Store
+title: Multi-Source Docs
+
+logo:
+  href: /
+  dark: ./assets/logo-dark.svg
+  light: ./assets/logo-light.svg
+  height: 28
 
 colors:
   accent-primary:
     dark: "#70E155"
-    light: "#008700"
+    light: "#1B4332"
   background:
-    dark: "#111113"
-    light: "#FFFFFF"
+    dark: "#1A1A17"
+    light: "#F5F0E8"
+  border:
+    dark: "#3A3A30"
+    light: "#D4C9B5"
+  sidebar-background:
+    dark: "#1F1F1B"
+    light: "#F0EBE1"
+  header-background:
+    dark: "#1A1A17"
+    light: "#F5F0E8"
+  card-background:
+    dark: "#252520"
+    light: "#EDE8DC"
+
+css: ./styles.css
+
+navbar-links:
+  - type: minimal
+    text: Seeds
+    href: /seeds
+  - type: minimal
+    text: Greenhouses
+    href: /greenhouses
+  - type: minimal
+    text: Nursery
+    href: /nursery
 
 navigation:
   - page: Home

@@ -1,20 +1,29 @@
 ---
-title: Seeds overview
-subtitle: Everything you need to know about sourcing and germinating seeds.
+title: Seeds
+subtitle: Browse seed documentation by variety.
 ---
 
-The Seeds team manages the seed catalog, germination protocols, and supplier integrations. This documentation covers how to browse the catalog, place bulk orders, and track germination rates.
+The Seeds team manages the full seed catalog across all varieties. Each variety has its own dedicated documentation maintained by a specialist sub-team.
+
+<CardGroup>
+  <Card title="Sunflower seeds" icon="fa-regular fa-sun" href="/seeds/sunflower">
+    Helianthus varieties, planting guides, and harvest timing.
+  </Card>
+  <Card title="Tomato seeds" icon="fa-regular fa-apple-whole" href="/seeds/tomato">
+    Heirloom and hybrid cultivars, germination, and transplanting.
+  </Card>
+</CardGroup>
 
 ## Quickstart
 
 <Steps>
 
-<Step title="Browse the catalog">
-Open the [seed catalog](/seeds/getting-started/seed-catalog) to search varieties by climate zone, germination time, or plant family.
+<Step title="Pick a variety">
+Browse the variety sub-sites above to find planting guides, soil requirements, and expected yields.
 </Step>
 
 <Step title="Place an order">
-Use the `/plants/{plantId}/order` endpoint to submit a bulk seed order. Each order requires a valid greenhouse destination.
+Use the `POST /plants/{plantId}/order` endpoint to submit a bulk seed order. Each order requires a valid greenhouse destination.
 </Step>
 
 <Step title="Track germination">
