@@ -8,6 +8,13 @@ instances:
 
 title: Seeds
 
+logo:
+  href: /
+  dark: ./assets/logo-dark.svg
+  light: ./assets/logo-light.svg
+  height: 28
+  right-text: Seeds
+
 navbar-links:
   - type: minimal
     text: Home

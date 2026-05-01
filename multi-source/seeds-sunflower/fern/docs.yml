@@ -6,7 +6,14 @@ instances:
   - url: multi-source.docs.buildwithfern.com/seeds/sunflower
     multi-source: true
 
-title: Seeds — Sunflower
+title: Sunflower
+
+logo:
+  href: /
+  dark: ./assets/logo-dark.svg
+  light: ./assets/logo-light.svg
+  height: 28
+  right-text: Sunflower
 
 navbar-links:
   - type: minimal
