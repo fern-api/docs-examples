@@ -10,11 +10,11 @@ Every sub-site in a multi-source setup defines its own `navbar-links`. This lets
 | Site | Header shows | Links to |
 | --- | --- | --- |
 | Homepage (`/`) | Multi-Source Docs | Seeds, Greenhouses, Nursery |
-| Seeds (`/seeds`) | Seeds | Home, Sunflower, Tomato |
-| Sunflower (`/seeds/sunflower`) | Sunflower | Home, Seeds |
-| Tomato (`/seeds/tomato`) | Tomato | Home, Seeds |
-| Greenhouses (`/greenhouses`) | Greenhouses | Home |
-| Nursery (`/nursery`) | Nursery | Home |
+| Seeds (`/seeds`) | Multi-Source Docs | Home, Sunflower, Tomato |
+| Sunflower (`/seeds/sunflower`) | Multi-Source Docs | Home, Seeds |
+| Tomato (`/seeds/tomato`) | Multi-Source Docs | Home, Seeds |
+| Greenhouses (`/greenhouses`) | Multi-Source Docs | Home |
+| Nursery (`/nursery`) | Multi-Source Docs | Home |
 
 ## How it's configured
 
@@ -31,7 +31,7 @@ navbar-links:
     href: /seeds
 ```
 
-The `logo.right-text` field sets the team name next to the shared leaf icon — inspired by how [NVIDIA's docs](https://docs.nvidia.com/heavyai) show `NVIDIA | HEAVY.AI` in the header.
+The `logo.right-text` field sets the site name next to the shared leaf icon. All sites use `Multi-Source Docs` for consistent branding across the domain.
 
 <Note>
 Navbar links are **not** inherited from the global theme. They must be set per-site so each team can link to what matters for their users.
