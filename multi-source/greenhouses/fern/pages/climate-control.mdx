@@ -1,0 +1,59 @@
+---
+title: Theme configuration
+subtitle: The full theme.yml that powers this site.
+---
+
+When you run `fern docs theme export`, the CLI extracts theme-eligible fields from your `docs.yml` into a `theme.yml` file. Here's the complete theme used by all six sites on this domain.
+
+## theme.yml
+
+```yaml
+colors:
+  accent-primary:
+    dark: '#70E155'
+    light: '#1B4332'
+  background:
+    dark: '#1A1A17'
+    light: '#F5F0E8'
+  border:
+    dark: '#3A3A30'
+    light: '#D4C9B5'
+  sidebar-background:
+    dark: '#1F1F1B'
+    light: '#F0EBE1'
+  header-background:
+    dark: '#1A1A17'
+    light: '#F5F0E8'
+  card-background:
+    dark: '#252520'
+    light: '#EDE8DC'
+css: ./assets/styles.css
+logo:
+  href: /
+  dark: ./assets/logo-dark.svg
+  light: ./assets/logo-light.svg
+  height: 28
+  right-text: Multi-Source Docs
+```
+
+## Upload workflow
+
+<Steps>
+
+<Step title="Define branding in your docs.yml">
+Set colors and CSS in the project that will own the theme (typically the homepage or a shared config project).
+</Step>
+
+<Step title="Export the theme">
+Run `fern docs theme export` to extract theme-eligible fields into a `theme/` directory.
+</Step>
+
+<Step title="Upload to the registry">
+Run `fern docs theme upload --name plantstore-theme` to save it under a name your org can reference.
+</Step>
+
+<Step title="Reference from other sites">
+Each sub-site adds `global-theme: plantstore-theme` to their `docs.yml`. The CLI fetches and applies it at publish time.
+</Step>
+
+</Steps>

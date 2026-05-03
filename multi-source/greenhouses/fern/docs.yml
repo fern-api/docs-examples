@@ -1,0 +1,22 @@
+# yaml-language-server: $schema=https://schema.buildwithfern.dev/docs-yml.json
+
+global-theme: plantstore-theme
+
+instances:
+  - url: multi-source.docs.buildwithfern.com/greenhouses
+    multi-source: true
+
+title: Greenhouses
+
+navbar-links:
+  - type: minimal
+    text: Home
+    href: /
+
+navigation:
+  - section: Theming
+    contents:
+      - page: Unified theming
+        path: ./pages/overview.mdx
+      - page: Theme configuration
+        path: ./pages/climate-control.mdx

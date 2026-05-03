@@ -1,0 +1,38 @@
+---
+title: Global theme
+subtitle: How the shared theme is created and uploaded.
+---
+
+All six sites on this domain share a `global-theme` called `plantstore-theme`. It's defined once in the homepage project and uploaded to Fern's registry.
+
+## Uploading the theme
+
+The theme is exported from the homepage's `docs.yml` and uploaded with two commands:
+
+```bash
+# Export theme-eligible fields (colors, CSS) to a theme directory
+fern docs theme export
+
+# Upload to the registry with a name
+fern docs theme upload --name plantstore-theme
+```
+
+Every other site references it with a single line:
+
+```yaml
+global-theme: plantstore-theme
+```
+
+## What the theme includes
+
+The `plantstore-theme` provides:
+
+- **Colors** — light tan background (`#F5F0E8`), dark forest green accents (`#1B4332`), with dark mode variants
+- **CSS** — custom styles for card hover effects, sidebar typography, and heading letter-spacing
+- **Logo** — the shared leaf icon and "Multi-Source Docs" text
+
+The theme does **not** include navbar-links — those are set per-site so each team can customize their header navigation.
+
+<Tip>
+View the full theme source in the [homepage project on GitHub](https://github.com/fern-api/docs-examples/tree/main/multi-source/homepage/fern).
+</Tip>

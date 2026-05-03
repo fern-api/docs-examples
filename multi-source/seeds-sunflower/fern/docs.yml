@@ -1,0 +1,25 @@
+# yaml-language-server: $schema=https://schema.buildwithfern.dev/docs-yml.json
+
+global-theme: plantstore-theme
+
+instances:
+  - url: multi-source.docs.buildwithfern.com/seeds/sunflower
+    multi-source: true
+
+title: Sunflower
+
+navbar-links:
+  - type: minimal
+    text: Home
+    href: /
+  - type: minimal
+    text: Seeds
+    href: /seeds
+
+navigation:
+  - section: Sub-site config
+    contents:
+      - page: Overview
+        path: ./pages/overview.mdx
+      - page: Per-site navbar
+        path: ./pages/planting.mdx

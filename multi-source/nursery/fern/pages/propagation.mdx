@@ -1,0 +1,41 @@
+---
+title: CI/CD setup
+subtitle: Automated publishing with GitHub Actions.
+---
+
+Each sub-site can be published through CI/CD. This example uses a GitHub Actions matrix to check and publish all six projects.
+
+## Workflow matrix
+
+The `publish-docs.yml` workflow runs `fern generate --docs` for each project in the matrix:
+
+```yaml
+strategy:
+  matrix:
+    project:
+      - multi-source/homepage
+      - multi-source/seeds
+      - multi-source/seeds-sunflower
+      - multi-source/seeds-tomato
+      - multi-source/greenhouses
+      - multi-source/nursery
+```
+
+Each matrix entry runs independently. If one site fails to publish, the others still succeed.
+
+## Selective publishing
+
+In a real setup, you might want to publish only the sites that changed. You can use path filters in your workflow:
+
+```yaml
+on:
+  push:
+    paths:
+      - 'multi-source/nursery/**'
+```
+
+This way, changes to the Nursery project only trigger a Nursery publish — the other five sites are unaffected.
+
+## Preview deployments
+
+The `preview-docs.yml` workflow generates preview URLs for pull requests, letting teams review changes before they go live. Each project in the matrix gets its own preview.

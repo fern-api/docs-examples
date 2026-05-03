@@ -1,0 +1,32 @@
+---
+title: Search and Ask AI
+subtitle: How search scopes hierarchically by sub-path.
+---
+
+Multi-source sites use **hierarchical search scoping**. When you search from a sub-path, results are filtered to content within that path and its children.
+
+## Try it yourself
+
+<Steps>
+
+<Step title="Search from the homepage">
+Go to [the homepage](/) and open the search bar. You'll see results from all six sub-sites — Seeds, Greenhouses, Nursery, and the nested Sunflower and Tomato sites.
+</Step>
+
+<Step title="Search from this site">
+Now try the search bar on this page. Results are scoped to `/seeds` and its children (`/seeds/sunflower`, `/seeds/tomato`). You won't see Greenhouse or Nursery content.
+</Step>
+
+<Step title="Search from a sub-child">
+Navigate to [Sunflower](/seeds/sunflower) and search again. Results narrow further to only Sunflower content.
+</Step>
+
+</Steps>
+
+## Ask AI works the same way
+
+The Ask AI feature follows the same hierarchical scoping. Ask a question from `/seeds` and the AI draws only from Seeds, Sunflower, and Tomato content. Ask from the homepage and it has access to everything.
+
+<Note>
+Search scoping is configured via `hierarchical` mode in the basepath settings. This is the default for multi-source sites.
+</Note>

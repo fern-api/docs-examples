@@ -1,0 +1,38 @@
+---
+title: Per-site navbar
+subtitle: Each sub-site controls its own header links.
+---
+
+Every sub-site in a multi-source setup defines its own `navbar-links`. This lets each team customize the header navigation for their audience.
+
+## Navbar links by site
+
+| Site | Header shows | Links to |
+| --- | --- | --- |
+| Homepage (`/`) | Multi-Source Docs | Seeds, Greenhouses, Nursery |
+| Seeds (`/seeds`) | Multi-Source Docs | Home, Sunflower, Tomato |
+| Sunflower (`/seeds/sunflower`) | Multi-Source Docs | Home, Seeds |
+| Tomato (`/seeds/tomato`) | Multi-Source Docs | Home, Seeds |
+| Greenhouses (`/greenhouses`) | Multi-Source Docs | Home |
+| Nursery (`/nursery`) | Multi-Source Docs | Home |
+
+## How it's configured
+
+Each site sets `navbar-links` in its own `docs.yml`:
+
+```yaml
+# On this Sunflower sub-site
+navbar-links:
+  - type: minimal
+    text: Home
+    href: /
+  - type: minimal
+    text: Seeds
+    href: /seeds
+```
+
+The logo and `right-text` come from the global theme, so all sites show the same "Multi-Source Docs" branding automatically.
+
+<Note>
+Navbar links are **not** inherited from the global theme. They must be set per-site so each team can link to what matters for their users.
+</Note>

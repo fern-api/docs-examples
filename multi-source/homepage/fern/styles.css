@@ -1,0 +1,42 @@
+/* Multi-Source Docs — shared minimalist theme */
+
+:root,
+.light {
+  --background: #F5F0E8;
+  --card-background: #EDE8DC;
+  --sidebar-background: #F0EBE1;
+  --header-background: #F5F0E8;
+  --border: #D4C9B5;
+}
+
+.dark {
+  --background: #1A1A17;
+  --card-background: #252520;
+  --sidebar-background: #1F1F1B;
+  --header-background: #1A1A17;
+  --border: #3A3A30;
+}
+
+/* Typography */
+.fern-page-heading {
+  letter-spacing: -0.03em;
+}
+
+/* Sidebar refinements */
+.fern-sidebar {
+  font-size: 0.875rem;
+}
+
+/* Card hover lift */
+.fern-card {
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.fern-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.dark .fern-card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}

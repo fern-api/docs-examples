@@ -1,0 +1,22 @@
+# yaml-language-server: $schema=https://schema.buildwithfern.dev/docs-yml.json
+
+global-theme: plantstore-theme
+
+instances:
+  - url: multi-source.docs.buildwithfern.com/nursery
+    multi-source: true
+
+title: Nursery
+
+navbar-links:
+  - type: minimal
+    text: Home
+    href: /
+
+navigation:
+  - section: Publishing
+    contents:
+      - page: Independent publishing
+        path: ./pages/overview.mdx
+      - page: CI/CD setup
+        path: ./pages/propagation.mdx

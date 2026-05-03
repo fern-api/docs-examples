@@ -1,0 +1,38 @@
+---
+title: Seeds
+subtitle: A hub site with nested sub-children.
+---
+
+This site demonstrates **nested multi-source** — a parent hub at `/seeds` with two child sites at `/seeds/sunflower` and `/seeds/tomato`. Each is a separate `fern/` project that publishes independently.
+
+<CardGroup>
+  <Card title="Sunflower" icon="fa-regular fa-sun" href="/seeds/sunflower">
+    A sub-child site at `/seeds/sunflower` with its own pages and navbar links.
+  </Card>
+  <Card title="Tomato" icon="fa-regular fa-apple-whole" href="/seeds/tomato">
+    Another sub-child at `/seeds/tomato` showing the global theme upload process.
+  </Card>
+</CardGroup>
+
+## How nested sub-children work
+
+The Seeds hub publishes to `/seeds`, while its children publish to deeper paths:
+
+```yaml
+# seeds/fern/docs.yml (this site)
+instances:
+  - url: multi-source.docs.buildwithfern.com/seeds
+    multi-source: true
+
+# seeds-sunflower/fern/docs.yml
+instances:
+  - url: multi-source.docs.buildwithfern.com/seeds/sunflower
+    multi-source: true
+
+# seeds-tomato/fern/docs.yml
+instances:
+  - url: multi-source.docs.buildwithfern.com/seeds/tomato
+    multi-source: true
+```
+
+Each project is fully independent — different teams can own different sub-paths and deploy on their own schedule.

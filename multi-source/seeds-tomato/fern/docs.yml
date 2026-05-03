@@ -1,0 +1,25 @@
+# yaml-language-server: $schema=https://schema.buildwithfern.dev/docs-yml.json
+
+global-theme: plantstore-theme
+
+instances:
+  - url: multi-source.docs.buildwithfern.com/seeds/tomato
+    multi-source: true
+
+title: Tomato
+
+navbar-links:
+  - type: minimal
+    text: Home
+    href: /
+  - type: minimal
+    text: Seeds
+    href: /seeds
+
+navigation:
+  - section: Global theme
+    contents:
+      - page: Overview
+        path: ./pages/overview.mdx
+      - page: Theme merging
+        path: ./pages/transplanting.mdx

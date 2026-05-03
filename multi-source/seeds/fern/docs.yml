@@ -1,0 +1,28 @@
+# yaml-language-server: $schema=https://schema.buildwithfern.dev/docs-yml.json
+
+global-theme: plantstore-theme
+
+instances:
+  - url: multi-source.docs.buildwithfern.com/seeds
+    multi-source: true
+
+title: Seeds
+
+navbar-links:
+  - type: minimal
+    text: Home
+    href: /
+  - type: minimal
+    text: Sunflower
+    href: /seeds/sunflower
+  - type: minimal
+    text: Tomato
+    href: /seeds/tomato
+
+navigation:
+  - section: Nested multi-source
+    contents:
+      - page: Overview
+        path: ./pages/overview.mdx
+      - page: Search and Ask AI
+        path: ./pages/catalog.mdx

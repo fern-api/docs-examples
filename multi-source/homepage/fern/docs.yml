@@ -1,0 +1,32 @@
+# yaml-language-server: $schema=https://schema.buildwithfern.dev/docs-yml.json
+
+global-theme: plantstore-theme
+
+instances:
+  - url: multi-source.docs.buildwithfern.com
+    multi-source: true
+
+title: Multi-Source Docs
+
+navbar-links:
+  - type: minimal
+    text: Seeds
+    href: /seeds
+  - type: minimal
+    text: Greenhouses
+    href: /greenhouses
+  - type: minimal
+    text: Nursery
+    href: /nursery
+
+navigation:
+  - page: Home
+    path: ./pages/home.mdx
+  - section: Teams
+    contents:
+      - link: Seeds
+        href: /seeds
+      - link: Greenhouses
+        href: /greenhouses
+      - link: Nursery
+        href: /nursery

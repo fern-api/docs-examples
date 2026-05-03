@@ -1,0 +1,36 @@
+---
+title: Independent publishing
+subtitle: Each team deploys on their own schedule.
+---
+
+This Nursery site is published independently from the other five sites on this domain. The Seeds team can ship updates without waiting on Nursery, and vice versa.
+
+## How multi-source publishing works
+
+Each sub-site is a separate `fern/` project with its own `fern.config.json` and `docs.yml`. Publishing one site doesn't affect the others:
+
+```bash
+# Publish only the Nursery site
+cd multi-source/nursery
+fern generate --docs
+```
+
+The other five sites remain unchanged. This is the key benefit of multi-source — teams don't block each other.
+
+## Project structure
+
+```
+multi-source/
+├── homepage/fern/         # publishes to /
+├── seeds/fern/            # publishes to /seeds
+├── seeds-sunflower/fern/  # publishes to /seeds/sunflower
+├── seeds-tomato/fern/     # publishes to /seeds/tomato
+├── greenhouses/fern/      # publishes to /greenhouses
+└── nursery/fern/          # publishes to /nursery (this site)
+```
+
+Each directory is self-contained with its own pages, assets, and configuration. The only shared element is the `global-theme` name — and even that is fetched from the registry at publish time, not from a local file.
+
+<Note>
+View the full source for all six projects on [GitHub](https://github.com/fern-api/docs-examples/tree/main/multi-source).
+</Note>

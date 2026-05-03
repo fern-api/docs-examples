@@ -1,0 +1,36 @@
+---
+title: Sunflower sub-site
+subtitle: How simple a sub-site's docs.yml can be.
+---
+
+This is a sub-child site at `/seeds/sunflower`. Its entire configuration fits in a few lines — the `global-theme` handles all the branding, including the logo.
+
+## The complete docs.yml
+
+```yaml
+global-theme: plantstore-theme
+
+instances:
+  - url: multi-source.docs.buildwithfern.com/seeds/sunflower
+    multi-source: true
+
+title: Sunflower
+
+navbar-links:
+  - type: minimal
+    text: Home
+    href: /
+  - type: minimal
+    text: Seeds
+    href: /seeds
+
+navigation:
+  - section: Sunflower seeds
+    contents:
+      - page: Overview
+        path: ./pages/overview.mdx
+      - page: Planting guide
+        path: ./pages/planting.mdx
+```
+
+That's it. The theme provides colors, CSS, and the logo. The local config only needs navbar links and page navigation. Each team manages their own pages and a minimal `docs.yml`.
