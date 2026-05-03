@@ -3,8 +3,9 @@ title: Multi-Source Docs
 subtitle: A live example of Fern's multi-source documentation.
 ---
 
-This site is built from [six independent projects](https://github.com/fern-api/docs-examples/tree/main/multi-source), each publishing to a different sub-path on the same domain. Every team owns their own `fern/` directory and deploys independently.
+This site is built from [six independent projects](https://github.com/fern-api/docs-examples/tree/main/multi-source) — in the common case, each one is a team — publishing to different sub-paths on the same domain. Every team owns their own `fern/` directory and deploys independently.
 
+<Accordion title="Project structure">
 ```
 multi-source.docs.buildwithfern.com
 ├── /                     ← homepage (this page)
@@ -14,6 +15,7 @@ multi-source.docs.buildwithfern.com
 ├── /greenhouses          ← Greenhouses team
 └── /nursery              ← Nursery team
 ```
+</Accordion>
 
 Search and Ask AI are scoped to the current source and any sources deeper in the path. For example, searching from `/seeds` returns results from `/seeds`, `/seeds/sunflower`, and `/seeds/tomato` — but not from `/greenhouses` or `/nursery`. Try it: navigate to [Seeds](/seeds) and open the search bar.
 
