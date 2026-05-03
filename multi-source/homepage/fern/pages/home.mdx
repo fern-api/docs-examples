@@ -5,19 +5,27 @@ subtitle: A live example of Fern's multi-source documentation.
 
 This site is built from [six independent projects](https://github.com/fern-api/docs-examples/tree/main/multi-source), each publishing to a different sub-path on the same domain. Every team owns their own `fern/` directory and deploys independently.
 
-<Note>
-Try the search bar or Ask AI — results are scoped hierarchically by sub-path. Navigate to a team site like [Seeds](/seeds) and search again to see only that team's content.
-</Note>
+```
+multi-source.docs.buildwithfern.com
+├── /                     ← homepage (this page)
+├── /seeds                ← Seeds team hub
+│   ├── /seeds/sunflower  ← Sunflower sub-team
+│   └── /seeds/tomato     ← Tomato sub-team
+├── /greenhouses          ← Greenhouses team
+└── /nursery              ← Nursery team
+```
+
+Search and Ask AI are scoped to the current source and any sources deeper in the path. For example, searching from `/seeds` returns results from `/seeds`, `/seeds/sunflower`, and `/seeds/tomato` — but not from `/greenhouses` or `/nursery`. Try it: navigate to [Seeds](/seeds) and open the search bar.
 
 <CardGroup>
   <Card title="Seeds" icon="fa-regular fa-seedling" href="/seeds">
-    A hub site with nested sub-children at `/seeds/sunflower` and `/seeds/tomato`.
+    A hub with nested sub-children at `/seeds/sunflower` and `/seeds/tomato`.
   </Card>
   <Card title="Greenhouses" icon="fa-regular fa-warehouse" href="/greenhouses">
-    Demonstrates unified theming via `global-theme` with a shared color palette and CSS.
+    Unified theming via `global-theme` — shared colors, CSS, and typography.
   </Card>
   <Card title="Nursery" icon="fa-regular fa-leaf" href="/nursery">
-    Shows how each team publishes independently with their own CI workflow.
+    Independent publishing — each team deploys on their own schedule.
   </Card>
 </CardGroup>
 
@@ -33,13 +41,11 @@ instances:
 
 All six projects share a `global-theme` for consistent branding — colors, CSS, and typography are defined once and [uploaded to the registry](https://github.com/fern-api/docs-examples/tree/main/multi-source/homepage/fern).
 
-## Features demonstrated
+## What's in this example
 
-| Feature | Where to see it |
-| --- | --- |
-| Multi-source publishing | Every sub-path is a separate project |
-| Nested sub-children | [/seeds](/seeds) → [/seeds/sunflower](/seeds/sunflower), [/seeds/tomato](/seeds/tomato) |
-| Global theme | Shared colors and CSS across all sites |
-| Per-site navbar | Each site has its own header links |
-| Hierarchical search | Search results scope to the current sub-path |
-| Independent deploys | Each team publishes without affecting others |
+- **Multi-source publishing** — every sub-path is a separate project that publishes independently
+- **Nested sub-children** — [/seeds](/seeds) acts as a hub for [/seeds/sunflower](/seeds/sunflower) and [/seeds/tomato](/seeds/tomato)
+- **Global theme** — shared colors and CSS across all six sites ([source](https://github.com/fern-api/docs-examples/tree/main/multi-source/homepage/fern))
+- **Per-site navbar** — each site defines its own header links
+- **Hierarchical search** — results scope to the current sub-path and its children
+- **Independent deploys** — teams publish without affecting each other
