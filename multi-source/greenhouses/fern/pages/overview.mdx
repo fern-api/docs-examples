@@ -1,24 +1,45 @@
 ---
-title: Greenhouses overview
-subtitle: Manage climate-controlled growing environments.
+title: Unified theming
+subtitle: Consistent branding across independent sites.
 ---
 
-The Greenhouses team builds and maintains climate control systems for indoor growing environments. This documentation covers greenhouse provisioning, sensor configuration, and environment monitoring.
+This Greenhouses site looks the same as every other site on this domain — same colors, same card styles, same typography. That's the `global-theme` at work.
 
-## Quickstart
+## One theme, six sites
 
-<Steps>
+All sites reference the same theme with a single line in their `docs.yml`:
 
-<Step title="Provision a greenhouse">
-Create a new greenhouse environment using `POST /greenhouses` with the desired dimensions, climate zone, and target plant families.
-</Step>
+```yaml
+global-theme: plantstore-theme
+```
 
-<Step title="Configure sensors">
-Attach temperature, humidity, and light sensors to each zone. The system auto-calibrates based on the target plant family.
-</Step>
+The theme is [defined in the homepage project](https://github.com/fern-api/docs-examples/tree/main/multi-source/homepage/fern) and uploaded to Fern's registry. When any site publishes, the CLI fetches the theme and merges it with the local config.
 
-<Step title="Monitor conditions">
-View real-time dashboards or set up alerts when conditions drift outside optimal ranges.
-</Step>
+## The color palette
 
-</Steps>
+| Token | Light | Dark |
+| --- | --- | --- |
+| Background | `#F5F0E8` (light tan) | `#1A1A17` |
+| Accent | `#1B4332` (forest green) | `#70E155` |
+| Border | `#D4C9B5` | `#3A3A30` |
+| Sidebar | `#F0EBE1` | `#1F1F1B` |
+| Card | `#EDE8DC` | `#252520` |
+
+## Custom CSS
+
+The theme also includes a `styles.css` with subtle refinements:
+
+```css
+/* Card hover lift effect */
+.fern-card {
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.fern-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+```
+
+<Tip>
+Toggle dark mode to see both color schemes in action. The theme defines separate values for light and dark modes.
+</Tip>

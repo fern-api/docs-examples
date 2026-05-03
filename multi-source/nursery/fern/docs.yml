@@ -21,9 +21,9 @@ navbar-links:
     href: /
 
 navigation:
-  - section: Getting started
+  - section: Publishing
     contents:
-      - page: Overview
+      - page: Independent publishing
         path: ./pages/overview.mdx
-      - page: Propagation
+      - page: CI/CD setup
         path: ./pages/propagation.mdx

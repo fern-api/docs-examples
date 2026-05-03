@@ -21,9 +21,9 @@ navbar-links:
     href: /
 
 navigation:
-  - section: Getting started
+  - section: Theming
     contents:
-      - page: Overview
+      - page: Unified theming
         path: ./pages/overview.mdx
-      - page: Climate control
+      - page: Theme configuration
         path: ./pages/climate-control.mdx

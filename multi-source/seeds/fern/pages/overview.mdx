@@ -1,33 +1,38 @@
 ---
 title: Seeds
-subtitle: Browse seed documentation by variety.
+subtitle: A hub site with nested sub-children.
 ---
 
-The Seeds team manages the full seed catalog across all varieties. Each variety has its own dedicated documentation maintained by a specialist sub-team.
+This site demonstrates **nested multi-source** — a parent hub at `/seeds` with two child sites at `/seeds/sunflower` and `/seeds/tomato`. Each is a separate `fern/` project that publishes independently.
 
 <CardGroup>
-  <Card title="Sunflower seeds" icon="fa-regular fa-sun" href="/seeds/sunflower">
-    Helianthus varieties, planting guides, and harvest timing.
+  <Card title="Sunflower" icon="fa-regular fa-sun" href="/seeds/sunflower">
+    A sub-child site at `/seeds/sunflower` with its own pages and navbar links.
   </Card>
-  <Card title="Tomato seeds" icon="fa-regular fa-apple-whole" href="/seeds/tomato">
-    Heirloom and hybrid cultivars, germination, and transplanting.
+  <Card title="Tomato" icon="fa-regular fa-apple-whole" href="/seeds/tomato">
+    Another sub-child at `/seeds/tomato` showing the global theme upload process.
   </Card>
 </CardGroup>
 
-## Quickstart
+## How nested sub-children work
 
-<Steps>
+The Seeds hub publishes to `/seeds`, while its children publish to deeper paths:
 
-<Step title="Pick a variety">
-Browse the variety sub-sites above to find planting guides, soil requirements, and expected yields.
-</Step>
+```yaml
+# seeds/fern/docs.yml (this site)
+instances:
+  - url: multi-source.docs.buildwithfern.com/seeds
+    multi-source: true
 
-<Step title="Place an order">
-Use the `POST /plants/{plantId}/order` endpoint to submit a bulk seed order. Each order requires a valid greenhouse destination.
-</Step>
+# seeds-sunflower/fern/docs.yml
+instances:
+  - url: multi-source.docs.buildwithfern.com/seeds/sunflower
+    multi-source: true
 
-<Step title="Track germination">
-Monitor germination progress through the dashboard or subscribe to webhook events for status updates.
-</Step>
+# seeds-tomato/fern/docs.yml
+instances:
+  - url: multi-source.docs.buildwithfern.com/seeds/tomato
+    multi-source: true
+```
 
-</Steps>
+Each project is fully independent — different teams can own different sub-paths and deploy on their own schedule.

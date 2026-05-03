@@ -1,28 +1,41 @@
 ---
-title: Propagation
-subtitle: Techniques for multiplying plant stock.
+title: CI/CD setup
+subtitle: Automated publishing with GitHub Actions.
 ---
 
-Propagation lets the nursery multiply plant stock without sourcing additional seeds. The system tracks propagation batches alongside seed-grown plants so inventory stays accurate.
+Each sub-site can be published through CI/CD. This example uses a GitHub Actions matrix to check and publish all six projects.
 
-## Supported methods
+## Workflow matrix
 
-<AccordionGroup>
+The `publish-docs.yml` workflow runs `fern generate --docs` for each project in the matrix:
 
-<Accordion title="Stem cuttings">
-Take a 10–15 cm cutting below a node, remove lower leaves, and place in a rooting medium. Log the cutting with `POST /nursery/propagation` using method `stem_cutting`.
-</Accordion>
+```yaml
+strategy:
+  matrix:
+    project:
+      - multi-source/homepage
+      - multi-source/seeds
+      - multi-source/seeds-sunflower
+      - multi-source/seeds-tomato
+      - multi-source/greenhouses
+      - multi-source/nursery
+```
 
-<Accordion title="Division">
-Split an established root clump into sections, each with at least one growing point. Use method `division` when logging.
-</Accordion>
+Each matrix entry runs independently. If one site fails to publish, the others still succeed.
 
-<Accordion title="Layering">
-Pin a low-growing branch to the soil surface and wait for roots to form at the contact point. Use method `layering` when logging.
-</Accordion>
+## Selective publishing
 
-</AccordionGroup>
+In a real setup, you might want to publish only the sites that changed. You can use path filters in your workflow:
 
-## Tracking batches
+```yaml
+on:
+  push:
+    paths:
+      - 'multi-source/nursery/**'
+```
 
-Every propagation event creates a batch linked to the parent plant. Query batches with `GET /nursery/propagation?parent_plant_id={plantId}` to see rooting success rates and timeline.
+This way, changes to the Nursery project only trigger a Nursery publish — the other five sites are unaffected.
+
+## Preview deployments
+
+The `preview-docs.yml` workflow generates preview URLs for pull requests, letting teams review changes before they go live. Each project in the matrix gets its own preview.

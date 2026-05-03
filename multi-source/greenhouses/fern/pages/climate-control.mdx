@@ -1,23 +1,53 @@
 ---
-title: Climate control
-subtitle: Configure and tune environmental parameters.
+title: Theme configuration
+subtitle: The full theme.yml that powers this site.
 ---
 
-Each greenhouse zone supports independent climate profiles. A climate profile defines the target ranges for temperature, humidity, light intensity, and CO2 concentration.
+When you run `fern docs theme export`, the CLI extracts theme-eligible fields from your `docs.yml` into a `theme.yml` file. Here's the complete theme used by all six sites on this domain.
 
-## Creating a climate profile
+## theme.yml
 
-```bash
-curl -X POST https://api.plantstore.com/greenhouses/{greenhouseId}/profiles \
-  -H "Authorization: Bearer $TOKEN" \
-  -d '{
-    "name": "tropical",
-    "temperature": { "min": 24, "max": 30, "unit": "celsius" },
-    "humidity": { "min": 70, "max": 85, "unit": "percent" },
-    "light_hours": 14
-  }'
+```yaml
+colors:
+  accent-primary:
+    dark: '#70E155'
+    light: '#1B4332'
+  background:
+    dark: '#1A1A17'
+    light: '#F5F0E8'
+  border:
+    dark: '#3A3A30'
+    light: '#D4C9B5'
+  sidebar-background:
+    dark: '#1F1F1B'
+    light: '#F0EBE1'
+  header-background:
+    dark: '#1A1A17'
+    light: '#F5F0E8'
+  card-background:
+    dark: '#252520'
+    light: '#EDE8DC'
+css: ./assets/styles.css
 ```
 
-## Scheduling
+## Upload workflow
 
-Climate profiles can follow a schedule to simulate day/night cycles or seasonal transitions. Use `PATCH /greenhouses/{greenhouseId}/profiles/{profileId}/schedule` to attach a cron-based schedule.
+<Steps>
+
+<Step title="Define branding in your docs.yml">
+Set colors and CSS in the project that will own the theme (typically the homepage or a shared config project).
+</Step>
+
+<Step title="Export the theme">
+Run `fern docs theme export` to extract theme-eligible fields into a `theme/` directory.
+</Step>
+
+<Step title="Upload to the registry">
+Run `fern docs theme upload --name plantstore-theme` to save it under a name your org can reference.
+</Step>
+
+<Step title="Reference from other sites">
+Each sub-site adds `global-theme: plantstore-theme` to their `docs.yml`. The CLI fetches and applies it at publish time.
+</Step>
+
+</Steps>

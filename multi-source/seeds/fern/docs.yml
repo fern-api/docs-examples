@@ -27,9 +27,9 @@ navbar-links:
     href: /seeds/tomato
 
 navigation:
-  - section: Getting started
+  - section: Nested multi-source
     contents:
       - page: Overview
         path: ./pages/overview.mdx
-      - page: Seed catalog
+      - page: Search and Ask AI
         path: ./pages/catalog.mdx

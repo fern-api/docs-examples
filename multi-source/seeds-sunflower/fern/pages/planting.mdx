@@ -1,36 +1,38 @@
 ---
-title: Planting guide
-subtitle: Step-by-step sunflower planting instructions.
+title: Per-site navbar
+subtitle: Each sub-site controls its own header links.
 ---
 
-Sunflowers are direct-sown after the last frost date. They dislike transplanting, so start them where they will grow.
+Every sub-site in a multi-source setup defines its own `navbar-links`. This lets each team customize the header navigation for their audience.
 
-## When to plant
+## Navbar links by site
 
-<Steps>
-
-<Step title="Check your frost date">
-Sunflowers need warm soil. Wait until soil temperatures are consistently above 15 C, typically 2-3 weeks after the last spring frost.
-</Step>
-
-<Step title="Prepare the bed">
-Choose a spot with full sun and well-drained soil. Work in compost to a depth of 15 cm. Sunflowers are not fussy about pH but prefer 6.0-7.5.
-</Step>
-
-<Step title="Sow seeds">
-Plant seeds 2.5 cm deep and 15 cm apart. Once seedlings have two sets of true leaves, thin to 45-60 cm spacing for full-size varieties.
-</Step>
-
-<Step title="Water and wait">
-Keep soil evenly moist until germination. After establishment, sunflowers are drought-tolerant. Expect blooms in 65-100 days depending on variety.
-</Step>
-
-</Steps>
-
-## Common issues
-
-| Issue | Cause | Solution |
+| Site | Header shows | Links to |
 | --- | --- | --- |
-| Leggy seedlings | Insufficient light | Ensure 6+ hours direct sun |
-| No germination | Cold soil | Wait for soil temps above 15 C |
-| Broken stems | Wind exposure | Stake tall varieties or plant near a fence |
+| Homepage (`/`) | Multi-Source Docs | Seeds, Greenhouses, Nursery |
+| Seeds (`/seeds`) | Seeds | Home, Sunflower, Tomato |
+| Sunflower (`/seeds/sunflower`) | Sunflower | Home, Seeds |
+| Tomato (`/seeds/tomato`) | Tomato | Home, Seeds |
+| Greenhouses (`/greenhouses`) | Greenhouses | Home |
+| Nursery (`/nursery`) | Nursery | Home |
+
+## How it's configured
+
+Each site sets `navbar-links` in its own `docs.yml`:
+
+```yaml
+# On this Sunflower sub-site
+navbar-links:
+  - type: minimal
+    text: Home
+    href: /
+  - type: minimal
+    text: Seeds
+    href: /seeds
+```
+
+The `logo.right-text` field sets the team name next to the shared leaf icon — inspired by how [NVIDIA's docs](https://docs.nvidia.com/heavyai) show `NVIDIA | HEAVY.AI` in the header.
+
+<Note>
+Navbar links are **not** inherited from the global theme. They must be set per-site so each team can link to what matters for their users.
+</Note>

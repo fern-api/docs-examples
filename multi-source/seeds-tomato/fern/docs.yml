@@ -24,9 +24,9 @@ navbar-links:
     href: /seeds
 
 navigation:
-  - section: Tomato seeds
+  - section: Global theme
     contents:
       - page: Overview
         path: ./pages/overview.mdx
-      - page: Transplanting
+      - page: Theme merging
         path: ./pages/transplanting.mdx

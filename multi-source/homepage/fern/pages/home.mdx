@@ -1,18 +1,45 @@
 ---
 title: Multi-Source Docs
-subtitle: Browse documentation from every team.
+subtitle: A live example of Fern's multi-source documentation.
 ---
 
-Each team publishes independently to their own sub-path on this domain. Some teams have nested sub-children for individual product areas.
+This site is built from [six independent projects](https://github.com/fern-api/docs-examples/tree/main/multi-source), each publishing to a different sub-path on the same domain. Every team owns their own `fern/` directory and deploys independently.
+
+<Note>
+Try the search bar or Ask AI — results are scoped hierarchically by sub-path. Navigate to a team site like [Seeds](/seeds) and search again to see only that team's content.
+</Note>
 
 <CardGroup>
   <Card title="Seeds" icon="fa-regular fa-seedling" href="/seeds">
-    Seed catalog hub with nested variety docs (sunflower, tomato).
+    A hub site with nested sub-children at `/seeds/sunflower` and `/seeds/tomato`.
   </Card>
   <Card title="Greenhouses" icon="fa-regular fa-warehouse" href="/greenhouses">
-    Climate control and monitoring.
+    Demonstrates unified theming via `global-theme` with a shared color palette and CSS.
   </Card>
   <Card title="Nursery" icon="fa-regular fa-leaf" href="/nursery">
-    Plant care and propagation.
+    Shows how each team publishes independently with their own CI workflow.
   </Card>
 </CardGroup>
+
+## How it works
+
+Each sub-site is a separate `fern/` project with its own `docs.yml`. The key setting is `multi-source: true` on the instance:
+
+```yaml
+instances:
+  - url: multi-source.docs.buildwithfern.com/seeds
+    multi-source: true
+```
+
+All six projects share a `global-theme` for consistent branding — colors, CSS, and typography are defined once and [uploaded to the registry](https://github.com/fern-api/docs-examples/tree/main/multi-source/homepage/fern).
+
+## Features demonstrated
+
+| Feature | Where to see it |
+| --- | --- |
+| Multi-source publishing | Every sub-path is a separate project |
+| Nested sub-children | [/seeds](/seeds) → [/seeds/sunflower](/seeds/sunflower), [/seeds/tomato](/seeds/tomato) |
+| Global theme | Shared colors and CSS across all sites |
+| Per-site navbar | Each site has its own header links |
+| Hierarchical search | Search results scope to the current sub-path |
+| Independent deploys | Each team publishes without affecting others |

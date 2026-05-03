@@ -24,9 +24,9 @@ navbar-links:
     href: /seeds
 
 navigation:
-  - section: Sunflower seeds
+  - section: Sub-site config
     contents:
       - page: Overview
         path: ./pages/overview.mdx
-      - page: Planting guide
+      - page: Per-site navbar
         path: ./pages/planting.mdx

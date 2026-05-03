@@ -1,24 +1,37 @@
 ---
-title: Tomato seeds
-subtitle: Heirloom and hybrid cultivars for every climate.
+title: Global theme
+subtitle: How the shared theme is created and uploaded.
 ---
 
-Tomatoes are the backbone of any kitchen garden. This section covers our full range of tomato varieties, from compact cherry tomatoes to heavy-yielding beefsteaks.
+All six sites on this domain share a `global-theme` called `plantstore-theme`. It's defined once in the homepage project and uploaded to Fern's registry.
 
-## Available varieties
+## Uploading the theme
 
-| Variety | Type | Days to harvest | Fruit size |
-| --- | --- | --- | --- |
-| Cherokee Purple | Heirloom | 80-90 | Large beefsteak |
-| Sun Gold | Hybrid | 55-65 | Cherry |
-| San Marzano | Heirloom | 78-85 | Paste/plum |
-| Early Girl | Hybrid | 50-62 | Medium globe |
+The theme is exported from the homepage's `docs.yml` and uploaded with two commands:
 
-## Germination specs
+```bash
+# Export theme-eligible fields (colors, CSS) to a theme directory
+fern docs theme export
 
-- **Soil temperature**: 21-27 C
-- **Depth**: 6 mm
-- **Spacing**: 60-90 cm apart (after transplant)
-- **Germination time**: 5-10 days
-- **Light**: Full sun (8+ hours)
-- **Start indoors**: 6-8 weeks before last frost
+# Upload to the registry with a name
+fern docs theme upload --name plantstore-theme
+```
+
+Every other site references it with a single line:
+
+```yaml
+global-theme: plantstore-theme
+```
+
+## What the theme includes
+
+The `plantstore-theme` provides:
+
+- **Colors** — light tan background (`#F5F0E8`), dark forest green accents (`#1B4332`), with dark mode variants
+- **CSS** — custom styles for card hover effects, sidebar typography, and heading letter-spacing
+
+The theme does **not** include logo or navbar-links — those are set per-site so each team can customize their header.
+
+<Tip>
+View the full theme source in the [homepage project on GitHub](https://github.com/fern-api/docs-examples/tree/main/multi-source/homepage/fern).
+</Tip>

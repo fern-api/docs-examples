@@ -1,24 +1,36 @@
 ---
-title: Nursery overview
-subtitle: Plant care, propagation, and grow-out tracking.
+title: Independent publishing
+subtitle: Each team deploys on their own schedule.
 ---
 
-The Nursery team handles everything after germination — transplanting seedlings, managing grow-out schedules, and preparing plants for distribution. This documentation covers the nursery workflow from intake to shipment.
+This Nursery site is published independently from the other five sites on this domain. The Seeds team can ship updates without waiting on Nursery, and vice versa.
 
-## Quickstart
+## How multi-source publishing works
 
-<Steps>
+Each sub-site is a separate `fern/` project with its own `fern.config.json` and `docs.yml`. Publishing one site doesn't affect the others:
 
-<Step title="Register seedlings">
-When seedlings arrive from the Seeds team, register them with `POST /nursery/intake` including the seed lot ID and greenhouse destination.
-</Step>
+```bash
+# Publish only the Nursery site
+cd multi-source/nursery
+fern generate --docs
+```
 
-<Step title="Assign grow-out schedules">
-Each plant variety has a recommended grow-out schedule. The system suggests one based on the species, but you can customize timing and nutrient plans.
-</Step>
+The other five sites remain unchanged. This is the key benefit of multi-source — teams don't block each other.
 
-<Step title="Prepare for distribution">
-Once plants reach maturity, mark them ready for distribution. The logistics system handles routing to retail locations or direct-to-customer shipments.
-</Step>
+## Project structure
 
-</Steps>
+```
+multi-source/
+├── homepage/fern/         # publishes to /
+├── seeds/fern/            # publishes to /seeds
+├── seeds-sunflower/fern/  # publishes to /seeds/sunflower
+├── seeds-tomato/fern/     # publishes to /seeds/tomato
+├── greenhouses/fern/      # publishes to /greenhouses
+└── nursery/fern/          # publishes to /nursery (this site)
+```
+
+Each directory is self-contained with its own pages, assets, and configuration. The only shared element is the `global-theme` name — and even that is fetched from the registry at publish time, not from a local file.
+
+<Note>
+View the full source for all six projects on [GitHub](https://github.com/fern-api/docs-examples/tree/main/multi-source).
+</Note>

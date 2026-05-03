@@ -1,36 +1,32 @@
 ---
-title: Transplanting
-subtitle: Moving tomato seedlings outdoors successfully.
+title: Theme merging
+subtitle: How global theme fields merge with local config.
 ---
 
-Tomatoes are always started indoors and transplanted after the last frost. Proper hardening off is critical to avoid transplant shock.
+When a site uses `global-theme`, Fern merges the theme's fields into the local `docs.yml` at publish time. Understanding the merge behavior helps you decide what to put in the theme vs. what to keep local.
 
-## Hardening off
+## Merge rules
 
-<Steps>
+| Field | Behavior |
+| --- | --- |
+| `colors` | Theme provides defaults; local values override per-key |
+| `css` | Theme CSS is applied; local CSS is appended after |
+| `logo` | Local `logo` replaces the theme's logo entirely |
+| `navbar-links` | Local links replace the theme's links entirely |
+| `navigation` | Always local — the theme never provides navigation |
 
-<Step title="Begin exposure">
-One week before transplanting, place seedlings outdoors in a sheltered, shaded spot for 2-3 hours. Bring them inside at night.
-</Step>
+## Practical split
 
-<Step title="Increase gradually">
-Each day, increase sun exposure by 1-2 hours and introduce light wind. By day five, leave them in full sun for the entire day.
-</Step>
+For this example site, the split is:
 
-<Step title="Transplant">
-On a cloudy afternoon, dig a hole deep enough to bury the stem up to the first set of true leaves. Tomatoes root along buried stems, producing a stronger plant.
-</Step>
+**In the theme** (shared by all six sites):
+- Color palette (background, accent, border, sidebar, header, card)
+- Custom CSS (card hover effects, sidebar font size, heading letter-spacing)
 
-<Step title="Water and mulch">
-Water deeply at transplant time. Apply 5-8 cm of straw or wood chip mulch around (not touching) the stem to retain moisture and suppress weeds.
-</Step>
+**In each site's local config** (unique per team):
+- Logo with `right-text` for the team name
+- Navbar links (Home, parent site, sibling sites)
+- Navigation structure (pages and sections)
+- Title
 
-</Steps>
-
-## Spacing guide
-
-| Growth habit | Spacing | Support |
-| --- | --- | --- |
-| Determinate (bush) | 60 cm | Cage or short stake |
-| Indeterminate (vine) | 90 cm | Tall stake or trellis |
-| Cherry / patio | 45 cm | Optional small cage |
+This split keeps branding consistent while letting each team own their content structure.
