@@ -29,3 +29,11 @@ navbar-links:
 navigation:
   - page: Home
     path: ./pages/home.mdx
+  - section: Teams
+    contents:
+      - link: Seeds
+        href: /seeds
+      - link: Greenhouses
+        href: /greenhouses
+      - link: Nursery
+        href: /nursery
