@@ -11,7 +11,7 @@ When a site uses `global-theme`, Fern merges the theme's fields into the local `
 | --- | --- |
 | `colors` | Theme provides defaults; local values override per-key |
 | `css` | Theme CSS is applied; local CSS is appended after |
-| `logo` | Local `logo` replaces the theme's logo entirely |
+| `logo` | Theme provides the default; local `logo` overrides it entirely |
 | `navbar-links` | Local links replace the theme's links entirely |
 | `navigation` | Always local — the theme never provides navigation |
 
@@ -22,9 +22,9 @@ For this example site, the split is:
 **In the theme** (shared by all six sites):
 - Color palette (background, accent, border, sidebar, header, card)
 - Custom CSS (card hover effects, sidebar font size, heading letter-spacing)
+- Logo (leaf icon + "Multi-Source Docs" text)
 
 **In each site's local config** (unique per team):
-- Logo with `right-text` for the team name
 - Navbar links (Home, parent site, sibling sites)
 - Navigation structure (pages and sections)
 - Title
