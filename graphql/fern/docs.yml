@@ -1,0 +1,45 @@
+# yaml-language-server: $schema=https://schema.buildwithfern.dev/docs-yml.json
+
+instances:
+  - url: graphql.docs.buildwithfern.com
+
+title: Plant Store GraphQL API
+
+layout:
+  searchbar-placement: header
+  page-width: full
+
+navigation:
+  - api: Plant Store GraphQL API
+    layout:
+      - section: Plants
+        contents:
+          - operation: QUERY plant
+          - operation: QUERY plants
+          - operation: MUTATION createPlant
+          - operation: MUTATION deletePlant
+      - section: Orders
+        contents:
+          - operation: QUERY order
+          - operation: QUERY orders
+          - operation: MUTATION placeOrder
+          - operation: MUTATION updateOrderStatus
+      - section: Subscriptions
+        contents:
+          - operation: SUBSCRIPTION orderPlaced
+          - operation: SUBSCRIPTION orderStatusChanged
+
+colors:
+  accent-primary:
+    dark: "#70E155"
+    light: "#008700"
+  background:
+    dark: "#111113"
+    light: "#FFFFFF"
+
+navbar-links:
+  - type: minimal
+    text: View source
+    url: https://github.com/fern-api/docs-examples/tree/main/graphql
+  - type: github
+    value: https://github.com/fern-api/fern

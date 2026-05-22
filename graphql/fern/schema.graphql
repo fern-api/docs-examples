@@ -1,0 +1,155 @@
+"""
+A date-time string in ISO 8601 format.
+"""
+scalar DateTime
+
+"""
+A plant in the catalog.
+"""
+type Plant {
+  "Unique identifier for the plant."
+  id: ID!
+  "Common name of the plant."
+  name: String!
+  "Botanical (Latin) name."
+  species: String!
+  "Care difficulty rating."
+  difficulty: Difficulty!
+  "Whether the plant is currently in stock."
+  inStock: Boolean!
+  "Price in USD cents."
+  priceInCents: Int!
+  "Tags describing the plant."
+  tags: [String!]
+  "When the plant was added to the catalog."
+  createdAt: DateTime!
+}
+
+"""
+A customer order.
+"""
+type Order {
+  "Unique identifier for the order."
+  id: ID!
+  "Plants included in the order."
+  items: [OrderItem!]!
+  "Current status of the order."
+  status: OrderStatus!
+  "When the order was placed."
+  placedAt: DateTime!
+}
+
+"""
+A single line item in an order.
+"""
+type OrderItem {
+  "The plant being ordered."
+  plant: Plant!
+  "Number of units."
+  quantity: Int!
+}
+
+"""
+Care difficulty levels.
+"""
+enum Difficulty {
+  "Minimal care required."
+  EASY
+  "Some gardening experience helpful."
+  MODERATE
+  "Requires specific conditions and attention."
+  HARD
+}
+
+"""
+Order lifecycle statuses.
+"""
+enum OrderStatus {
+  PENDING
+  CONFIRMED
+  SHIPPED
+  DELIVERED
+  CANCELLED
+}
+
+"""
+Input for adding a new plant to the catalog.
+"""
+input CreatePlantInput {
+  "Common name of the plant."
+  name: String!
+  "Botanical (Latin) name."
+  species: String!
+  "Care difficulty rating."
+  difficulty: Difficulty!
+  "Price in USD cents."
+  priceInCents: Int!
+  "Tags describing the plant."
+  tags: [String!]
+}
+
+"""
+Input for placing a new order.
+"""
+input PlaceOrderInput {
+  "Items to include in the order."
+  items: [OrderItemInput!]!
+}
+
+"""
+A single item in a new order.
+"""
+input OrderItemInput {
+  "ID of the plant to order."
+  plantId: ID!
+  "Number of units."
+  quantity: Int!
+}
+
+"""
+Filter options for listing plants.
+"""
+input PlantFilter {
+  "Filter by difficulty level."
+  difficulty: Difficulty
+  "Only show plants that are in stock."
+  inStock: Boolean
+  "Filter by tag."
+  tag: String
+}
+
+type Query {
+  "Look up a plant by its ID."
+  plant(id: ID!): Plant
+
+  "List plants with optional filtering."
+  plants(filter: PlantFilter, limit: Int = 20, offset: Int = 0): [Plant!]!
+
+  "Look up an order by its ID."
+  order(id: ID!): Order
+
+  "List orders, optionally filtered by status."
+  orders(status: OrderStatus, limit: Int = 20): [Order!]!
+}
+
+type Mutation {
+  "Add a new plant to the catalog."
+  createPlant(input: CreatePlantInput!): Plant!
+
+  "Remove a plant from the catalog."
+  deletePlant(id: ID!): Boolean!
+
+  "Place a new order."
+  placeOrder(input: PlaceOrderInput!): Order!
+
+  "Update an order's status."
+  updateOrderStatus(id: ID!, status: OrderStatus!): Order
+}
+
+type Subscription {
+  "Subscribe to new orders."
+  orderPlaced: Order!
+
+  "Subscribe to status changes for a specific order."
+  orderStatusChanged(orderId: ID!): Order!
+}
