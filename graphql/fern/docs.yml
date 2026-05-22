@@ -3,31 +3,42 @@
 instances:
   - url: graphql.docs.buildwithfern.com
 
-title: Plant Store GraphQL API
+title: GraphQL Docs Example
 
 layout:
   searchbar-placement: header
   page-width: full
+  tabs-placement: header
+
+tabs:
+  home:
+    display-name: Docs
+    icon: home
+  API Reference:
+    display-name: API Reference
+    icon: puzzle
 
 navigation:
-  - api: Plant Store GraphQL API
+  - tab: home
     layout:
-      - section: Plants
+      - section: Get started
         contents:
-          - operation: QUERY plant
-          - operation: QUERY plants
-          - operation: MUTATION createPlant
-          - operation: MUTATION deletePlant
-      - section: Orders
-        contents:
-          - operation: QUERY order
-          - operation: QUERY orders
-          - operation: MUTATION placeOrder
-          - operation: MUTATION updateOrderStatus
-      - section: Subscriptions
-        contents:
-          - operation: SUBSCRIPTION orderPlaced
-          - operation: SUBSCRIPTION orderStatusChanged
+          - page: Welcome
+            path: docs/pages/welcome.mdx
+            icon: fa-duotone fa-house
+  - tab: API Reference
+    layout:
+      - api: Plant Store GraphQL API
+
+navbar-links:
+  - type: minimal
+    text: Fork this repo
+    url: https://github.com/fern-api/docs-examples
+  - type: filled
+    text: Dashboard
+    url: https://dashboard.buildwithfern.com
+  - type: github
+    value: https://github.com/fern-api/fern
 
 colors:
   accent-primary:
@@ -37,9 +48,16 @@ colors:
     dark: "#111113"
     light: "#FFFFFF"
 
-navbar-links:
-  - type: minimal
-    text: View source
-    url: https://github.com/fern-api/docs-examples/tree/main/graphql
-  - type: github
-    value: https://github.com/fern-api/fern
+theme:
+  page-actions: toolbar
+  footer-nav: minimal
+
+logo:
+  dark: docs/assets/logo-dark.svg
+  light: docs/assets/logo.svg
+  height: 20
+  href: https://buildwithfern.com
+
+favicon: docs/assets/favicon.svg
+
+css: styles.css

@@ -1,0 +1,110 @@
+---
+title: GraphQL docs example
+subtitle: Generate API Reference documentation from a GraphQL schema
+slug: welcome
+---
+
+This example demonstrates how [Fern](https://buildwithfern.com) generates interactive API Reference documentation from a GraphQL schema. It includes a sample Plant Store GraphQL API with queries, mutations, and subscriptions.
+
+## What's included
+
+<Files>
+  <File name="docs.yml" comment="Configures navigation, theme, and hosting" />
+  <File name="fern.config.json" comment="Sets your organization name and CLI version" />
+  <File name="generators.yml" comment="Points to the GraphQL schema file" />
+  <File name="schema.graphql" comment="Sample Plant Store GraphQL schema" />
+  <Folder name="docs" defaultOpen>
+    <Folder name="pages" comment="Markdown content for your documentation" />
+    <Folder name="assets" comment="Logos, favicon, and other assets" />
+  </Folder>
+</Files>
+
+## Getting started
+
+<Steps>
+<Step title="Clone this repository">
+
+```bash
+git clone https://github.com/fern-api/docs-examples.git
+cp -r docs-examples/graphql my-graphql-docs
+cd my-graphql-docs
+```
+
+</Step>
+
+<Step title="Install the Fern CLI">
+
+```bash
+npm install -g fern-api
+```
+
+</Step>
+
+<Step title="Preview locally">
+
+Start a local development server with hot-reloading:
+
+```bash
+fern docs dev
+```
+
+Open [http://localhost:3000](http://localhost:3000) to see your docs.
+
+</Step>
+
+<Step title="Make it yours">
+
+Replace `schema.graphql` with your own GraphQL schema file and update `generators.yml`:
+
+```yaml title="generators.yml"
+api:
+  specs:
+    - graphql: your-schema.graphql
+      name: Your API
+      origin: https://api.example.com/graphql
+```
+
+Update `fern.config.json` with your organization name and `docs.yml` with your desired URL.
+
+</Step>
+
+<Step title="Publish">
+
+When you're ready to go live:
+
+```bash
+fern generate --docs
+```
+
+</Step>
+</Steps>
+
+## How it works
+
+Fern reads your `.graphql` schema file and generates interactive API Reference documentation. The generated reference includes:
+
+- **Queries** with input arguments and return types
+- **Mutations** with input objects and response schemas
+- **Subscriptions** with event payloads
+- **Types, enums, and input objects** with field-level documentation
+
+Navigate to the **API Reference** tab to see the generated documentation for the sample Plant Store API.
+
+## Learn more
+
+<CardGroup cols={2}>
+  <Card
+    title="GraphQL Reference docs"
+    icon="duotone diagram-project"
+    href="https://buildwithfern.com/learn/docs/api-references/generate-graphql-ref"
+  >
+    Configuration guide for GraphQL API References
+  </Card>
+  <Card
+    title="Customize your docs"
+    icon="duotone palette"
+    href="https://buildwithfern.com/learn/docs/getting-started/quickstart"
+  >
+    Brand your documentation with colors, logos, and layouts
+  </Card>
+</CardGroup>
