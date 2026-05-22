@@ -120,16 +120,16 @@ input PlantFilter {
 
 type Query {
   "Look up a plant by its ID."
-  plant(id: ID!): Plant
+  getPlant(id: ID!): Plant
 
   "List plants with optional filtering."
-  plants(filter: PlantFilter, limit: Int = 20, offset: Int = 0): [Plant!]!
+  listPlants(filter: PlantFilter, limit: Int = 20, offset: Int = 0): [Plant!]!
 
   "Look up an order by its ID."
-  order(id: ID!): Order
+  getOrder(id: ID!): Order
 
   "List orders, optionally filtered by status."
-  orders(status: OrderStatus, limit: Int = 20): [Order!]!
+  listOrders(status: OrderStatus, limit: Int = 20): [Order!]!
 }
 
 type Mutation {
