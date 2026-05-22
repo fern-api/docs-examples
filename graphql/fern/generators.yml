@@ -1,0 +1,6 @@
+# yaml-language-server: $schema=https://schema.buildwithfern.dev/generators-yml.json
+api:
+  specs:
+    - graphql: schema.graphql
+      name: Plant Store
+      origin: https://api.example.com/plants/graphql
