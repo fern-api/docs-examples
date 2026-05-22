@@ -28,6 +28,11 @@ navigation:
             icon: fa-duotone fa-house
   - tab: API Reference
     layout:
+      - section: Overview
+        contents:
+          - page: API reference
+            path: docs/pages/api-reference-overview.mdx
+            icon: fa-duotone fa-book
       - api: Plant Store GraphQL API
 
 navbar-links:
