@@ -1,101 +1,90 @@
 name: Preview Docs
 
-on: pull_request
+on:
+  pull_request:
+    types: [opened, synchronize, ready_for_review]
 
 jobs:
-  generate-preview:
+  preview:
+    if: github.event.pull_request.head.repo.full_name == github.repository
     runs-on: ubuntu-latest
     permissions:
       contents: read
-    strategy:
-      fail-fast: false
-      matrix:
-        project:
-          - docs-starter
-          - graphql
-          - i18n
-          - multi-source/homepage
-          - multi-source/seeds
-          - multi-source/seeds-sunflower
-          - multi-source/seeds-tomato
-          - multi-source/greenhouses
-          - multi-source/nursery
-          - versioning
+      pull-requests: write
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          ref: ${{ github.event.pull_request.head.sha }}
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Checkout PR
+        run: |
+          git fetch origin pull/${{ github.event.pull_request.number }}/head:pr-${{ github.event.pull_request.number }}
+          git checkout pr-${{ github.event.pull_request.number }}
 
       - name: Setup Fern CLI
         uses: fern-api/setup-fern-cli@v1
 
-      - name: Generate preview URL
-        id: generate-docs
-        working-directory: ${{ matrix.project }}
+      - name: Generate previews and build comment
         env:
           FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
-          HEAD_REF: ${{ github.head_ref }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
         run: |
-          OUTPUT=$(fern generate --docs --preview --id "${HEAD_REF}-${{ matrix.project }}" 2>&1) || true
-          echo "$OUTPUT"
-          URL=$(echo "$OUTPUT" | grep -oP 'Published docs to \K.*(?= \()')
-          echo "preview_url=$URL" >> $GITHUB_OUTPUT
+          PROJECTS="docs-starter graphql i18n multi-source/homepage multi-source/seeds multi-source/seeds-sunflower multi-source/seeds-tomato multi-source/greenhouses multi-source/nursery versioning"
+          CHANGED_FILES=$(git diff --name-only origin/main...HEAD)
 
-      - name: Save preview URL
-        id: artifact-meta
-        run: |
-          SAFE_NAME=$(echo "${{ matrix.project }}" | tr '/' '-')
-          echo "safe_name=${SAFE_NAME}" >> $GITHUB_OUTPUT
-          echo "${{ matrix.project }}=${{ steps.generate-docs.outputs.preview_url }}" > "${SAFE_NAME}.txt"
+          : > comment.md
+          HAS_CONTENT=false
 
-      - name: Upload preview URL
-        uses: actions/upload-artifact@v4
-        with:
-          name: preview-url-${{ steps.artifact-meta.outputs.safe_name }}
-          path: "${{ steps.artifact-meta.outputs.safe_name }}.txt"
-          retention-days: 1
-
-  comment:
-    needs: generate-preview
-    if: ${{ !cancelled() }}
-    runs-on: ubuntu-latest
-    permissions:
-      pull-requests: write
-    steps:
-      - name: Download all preview URLs
-        uses: actions/download-artifact@v4
-        with:
-          pattern: preview-url-*
-          merge-multiple: true
-
-      - name: Build comment
-        run: |
-          {
-            echo "## :herb: Docs Previews"
-            echo ""
-            echo "| Example | Preview |"
-            echo "| --- | --- |"
-          } > comment.md
-
-          for project in docs-starter graphql i18n multi-source/homepage multi-source/seeds multi-source/seeds-sunflower multi-source/seeds-tomato multi-source/greenhouses multi-source/nursery versioning; do
-            SAFE_NAME=$(echo "$project" | tr '/' '-')
-            FILE="${SAFE_NAME}.txt"
-            if [ -f "$FILE" ]; then
-              URL=$(cut -d'=' -f2- "$FILE")
-              if [ -n "$URL" ]; then
-                echo "| \`${project}\` | [Preview](${URL}) |" >> comment.md
-              else
-                echo "| \`${project}\` | :warning: Failed |" >> comment.md
-              fi
-            else
-              echo "| \`${project}\` | :warning: Failed |" >> comment.md
+          for project in $PROJECTS; do
+            PROJECT_CHANGES=$(echo "$CHANGED_FILES" | grep "^${project}/" || true)
+            if [ -z "$PROJECT_CHANGES" ]; then
+              continue
             fi
+
+            SAFE_PROJECT=$(echo "$project" | tr '/' '-')
+
+            pushd "$project" > /dev/null
+            OUTPUT=$(fern generate --docs --preview --id "pr${PR_NUMBER}-${SAFE_PROJECT}" 2>&1) || true
+            popd > /dev/null
+            echo "$OUTPUT"
+            URL=$(echo "$OUTPUT" | grep -oP 'Published docs to \K.*(?= \()')
+
+            if [ -z "$URL" ]; then
+              continue
+            fi
+
+            BASE_URL=$(echo "$URL" | grep -oP 'https?://[^/]+')
+
+            MDX_CHANGES=$(echo "$PROJECT_CHANGES" | grep '\.mdx$' | sed "s|^${project}/||" || true)
+            PAGE_LINKS=""
+            if [ -n "$MDX_CHANGES" ]; then
+              FILES_PARAM=$(echo "$MDX_CHANGES" | tr '\n' ',' | sed 's/,$//')
+              RESPONSE=$(curl -sf -H "FERN_TOKEN: $FERN_TOKEN" "${URL}/api/fern-docs/get-slug-for-file?files=${FILES_PARAM}" 2>/dev/null) || true
+              if [ -n "$RESPONSE" ]; then
+                PAGE_LINKS=$(echo "$RESPONSE" | jq -r --arg url "$BASE_URL" \
+                  '.mappings[] | select(.slug != null) | "- [\(.slug)](\($url)/\(.slug))"' 2>/dev/null || true)
+              fi
+            fi
+
+            echo ":herb: **Preview \`${project}\`:** <${URL}>" >> comment.md
+            if [ -n "$PAGE_LINKS" ]; then
+              echo "" >> comment.md
+              echo "Here are the markdown pages you've updated:" >> comment.md
+              echo "$PAGE_LINKS" >> comment.md
+            fi
+            echo "" >> comment.md
+            HAS_CONTENT=true
           done
 
+          if [ "$HAS_CONTENT" = false ]; then
+            echo ":herb: No docs changes detected in this PR." > comment.md
+          fi
+
       - name: Post PR comment
-        uses: thollander/actions-comment-pull-request@v2.4.3
+        uses: thollander/actions-comment-pull-request@v3
         with:
-          filePath: comment.md
-          comment_tag: preview-docs
+          file-path: comment.md
+          comment-tag: preview-docs
           mode: upsert
