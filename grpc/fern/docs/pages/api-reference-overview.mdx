@@ -1,0 +1,22 @@
+---
+title: API reference
+subtitle: Interactive documentation generated from Protocol Buffer files
+slug: api-reference
+---
+
+Fern generates interactive API Reference documentation from your `.proto` files. This example uses a sample Plant Store gRPC API to demonstrate the feature.
+
+The generated reference includes all services, RPCs, messages, and enums with field-level documentation pulled from your proto comments.
+
+## Plant Store gRPC API
+
+Browse the API endpoints in the sidebar, or jump to a section:
+
+<CardGroup cols={2}>
+  <Card title="Unary RPCs" icon="fa-duotone fa-arrow-right-arrow-left" href="/api-reference/plant-store-grpc-api/plant-store/plantStoreService/getPlant">
+    Request-response operations for plants and orders
+  </Card>
+  <Card title="Streaming RPCs" icon="fa-duotone fa-tower-broadcast" href="/api-reference/plant-store-grpc-api/plant-store/plantStoreService/watchOrderStatus">
+    Real-time server-streaming updates
+  </Card>
+</CardGroup>

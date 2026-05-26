@@ -1,0 +1,199 @@
+syntax = "proto3";
+
+package plantstore.v1;
+
+import "google/protobuf/timestamp.proto";
+
+// The Plant Store service manages a catalog of plants and customer orders.
+service PlantStoreService {
+  // Look up a plant by its ID.
+  rpc GetPlant(GetPlantRequest) returns (Plant);
+
+  // List plants with optional filtering.
+  rpc ListPlants(ListPlantsRequest) returns (ListPlantsResponse);
+
+  // Add a new plant to the catalog.
+  rpc CreatePlant(CreatePlantRequest) returns (Plant);
+
+  // Remove a plant from the catalog.
+  rpc DeletePlant(DeletePlantRequest) returns (DeletePlantResponse);
+
+  // Look up an order by its ID.
+  rpc GetOrder(GetOrderRequest) returns (Order);
+
+  // List orders, optionally filtered by status.
+  rpc ListOrders(ListOrdersRequest) returns (ListOrdersResponse);
+
+  // Place a new order.
+  rpc PlaceOrder(PlaceOrderRequest) returns (Order);
+
+  // Update an order's status.
+  rpc UpdateOrderStatus(UpdateOrderStatusRequest) returns (Order);
+
+  // Stream real-time order status updates.
+  rpc WatchOrderStatus(WatchOrderStatusRequest) returns (stream OrderStatusEvent);
+}
+
+// Care difficulty levels.
+enum Difficulty {
+  DIFFICULTY_UNSPECIFIED = 0;
+  // Minimal care required.
+  DIFFICULTY_EASY = 1;
+  // Some gardening experience helpful.
+  DIFFICULTY_MODERATE = 2;
+  // Requires specific conditions and attention.
+  DIFFICULTY_HARD = 3;
+}
+
+// Order lifecycle statuses.
+enum OrderStatus {
+  ORDER_STATUS_UNSPECIFIED = 0;
+  ORDER_STATUS_PENDING = 1;
+  ORDER_STATUS_CONFIRMED = 2;
+  ORDER_STATUS_SHIPPED = 3;
+  ORDER_STATUS_DELIVERED = 4;
+  ORDER_STATUS_CANCELLED = 5;
+}
+
+// A plant in the catalog.
+message Plant {
+  // Unique identifier for the plant.
+  string id = 1;
+  // Common name of the plant.
+  string name = 2;
+  // Botanical (Latin) name.
+  string species = 3;
+  // Care difficulty rating.
+  Difficulty difficulty = 4;
+  // Whether the plant is currently in stock.
+  bool in_stock = 5;
+  // Price in USD cents.
+  int32 price_in_cents = 6;
+  // Tags describing the plant.
+  repeated string tags = 7;
+  // When the plant was added to the catalog.
+  google.protobuf.Timestamp created_at = 8;
+}
+
+// A customer order.
+message Order {
+  // Unique identifier for the order.
+  string id = 1;
+  // Items included in the order.
+  repeated OrderItem items = 2;
+  // Current status of the order.
+  OrderStatus status = 3;
+  // When the order was placed.
+  google.protobuf.Timestamp placed_at = 4;
+}
+
+// A single line item in an order.
+message OrderItem {
+  // The ID of the plant being ordered.
+  string plant_id = 1;
+  // Number of units.
+  int32 quantity = 2;
+}
+
+// Request to get a single plant.
+message GetPlantRequest {
+  // ID of the plant to retrieve.
+  string id = 1;
+}
+
+// Request to list plants.
+message ListPlantsRequest {
+  // Filter by difficulty level.
+  Difficulty difficulty = 1;
+  // Only show plants that are in stock.
+  bool in_stock_only = 2;
+  // Filter by tag.
+  string tag = 3;
+  // Maximum number of results to return.
+  int32 limit = 4;
+  // Number of results to skip.
+  int32 offset = 5;
+}
+
+// Response containing a list of plants.
+message ListPlantsResponse {
+  // The list of plants matching the filter.
+  repeated Plant plants = 1;
+  // Total number of plants matching the filter.
+  int32 total_count = 2;
+}
+
+// Request to create a new plant.
+message CreatePlantRequest {
+  // Common name of the plant.
+  string name = 1;
+  // Botanical (Latin) name.
+  string species = 2;
+  // Care difficulty rating.
+  Difficulty difficulty = 3;
+  // Price in USD cents.
+  int32 price_in_cents = 4;
+  // Tags describing the plant.
+  repeated string tags = 5;
+}
+
+// Request to delete a plant.
+message DeletePlantRequest {
+  // ID of the plant to delete.
+  string id = 1;
+}
+
+// Response from deleting a plant.
+message DeletePlantResponse {}
+
+// Request to get a single order.
+message GetOrderRequest {
+  // ID of the order to retrieve.
+  string id = 1;
+}
+
+// Request to list orders.
+message ListOrdersRequest {
+  // Filter by order status.
+  OrderStatus status = 1;
+  // Maximum number of results to return.
+  int32 limit = 2;
+}
+
+// Response containing a list of orders.
+message ListOrdersResponse {
+  // The list of orders matching the filter.
+  repeated Order orders = 1;
+}
+
+// Request to place a new order.
+message PlaceOrderRequest {
+  // Items to include in the order.
+  repeated OrderItem items = 1;
+}
+
+// Request to update an order's status.
+message UpdateOrderStatusRequest {
+  // ID of the order to update.
+  string id = 1;
+  // New status for the order.
+  OrderStatus status = 2;
+}
+
+// Request to watch order status changes.
+message WatchOrderStatusRequest {
+  // ID of the order to watch.
+  string order_id = 1;
+}
+
+// An order status change event.
+message OrderStatusEvent {
+  // ID of the order.
+  string order_id = 1;
+  // Previous status.
+  OrderStatus previous_status = 2;
+  // New status.
+  OrderStatus new_status = 3;
+  // When the status changed.
+  google.protobuf.Timestamp changed_at = 4;
+}
