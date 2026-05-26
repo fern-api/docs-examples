@@ -1,22 +1,22 @@
 name: Preview Docs
 
-on: pull_request
+on:
+  pull_request:
+    types: [opened, synchronize, ready_for_review]
 
 jobs:
-  run:
+  preview:
+    if: github.event.pull_request.head.repo.full_name == github.repository
     runs-on: ubuntu-latest
     permissions:
       contents: read
       pull-requests: write
-    strategy:
-      fail-fast: false
-      matrix:
-        project: [docs-starter, i18n, multi-source/homepage, multi-source/seeds, multi-source/seeds-sunflower, multi-source/seeds-tomato, multi-source/greenhouses, multi-source/nursery, versioning]
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0  # Fetch full history for git diff
+          fetch-depth: 0
+          persist-credentials: false
 
       - name: Checkout PR
         run: |
@@ -26,60 +26,65 @@ jobs:
       - name: Setup Fern CLI
         uses: fern-api/setup-fern-cli@v1
 
-      - name: Generate preview URL
-        id: generate-docs
-        working-directory: ${{ matrix.project }}
+      - name: Generate previews and build comment
         env:
           FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
-          HEAD_REF: ${{ github.head_ref }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
         run: |
-          OUTPUT=$(fern generate --docs --preview --id "${HEAD_REF}-${{ matrix.project }}" 2>&1) || true
-          echo "$OUTPUT"
-          URL=$(echo "$OUTPUT" | grep -oP 'Published docs to \K.*(?= \()')
-          echo "preview_url=$URL" >> $GITHUB_OUTPUT
-          echo "Preview URL: $URL"
+          PROJECTS="docs-starter graphql i18n multi-source/homepage multi-source/seeds multi-source/seeds-sunflower multi-source/seeds-tomato multi-source/greenhouses multi-source/nursery versioning"
+          CHANGED_FILES=$(git diff --name-only origin/main...HEAD)
 
-      - name: Get page links for changed MDX files
-        id: page-links
-        env:
-          FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
-        run: |
-          PREVIEW_URL="${{ steps.generate-docs.outputs.preview_url }}"
-          CHANGED_FILES=$(git diff --name-only origin/main...HEAD -- '${{ matrix.project }}/**/*.mdx' 2>/dev/null || echo "")
-          
-          if [ -z "$CHANGED_FILES" ] || [ -z "$PREVIEW_URL" ]; then
-            echo "page_links=" >> $GITHUB_OUTPUT; exit 0
-          fi
-          
-          BASE_URL=$(echo "$PREVIEW_URL" | grep -oP 'https?://[^/]+')
-          
-          FILES_PARAM=$(echo "$CHANGED_FILES" | tr '\n' ',' | sed 's/,$//')
-          RESPONSE=$(curl -sf -H "FERN_TOKEN: $FERN_TOKEN" "${PREVIEW_URL}/api/fern-docs/get-slug-for-file?files=${FILES_PARAM}" 2>/dev/null) || {
-            echo "page_links=" >> $GITHUB_OUTPUT; exit 0
-          }
-          
-          PAGE_LINKS=$(echo "$RESPONSE" | jq -r --arg url "$BASE_URL" \
-            '.mappings[] | select(.slug != null) | "- [\(.slug)](\($url)/\(.slug))"')
-          
-          if [ -n "$PAGE_LINKS" ]; then
-            { echo "page_links<<EOF"; echo "$PAGE_LINKS"; echo "EOF"; } >> $GITHUB_OUTPUT
-          else
-            echo "page_links=" >> $GITHUB_OUTPUT
-          fi
+          : > comment.md
+          HAS_CONTENT=false
 
-      - name: Create comment content
-        run: |
-          echo ":herb: **Preview your docs (${{ matrix.project }}):** <${{ steps.generate-docs.outputs.preview_url }}>" > comment.md
+          for project in $PROJECTS; do
+            PROJECT_CHANGES=$(echo "$CHANGED_FILES" | grep "^${project}/" || true)
+            if [ -z "$PROJECT_CHANGES" ]; then
+              continue
+            fi
 
-          if [ -n "${{ steps.page-links.outputs.page_links }}" ]; then
+            SAFE_PROJECT=$(echo "$project" | tr '/' '-')
+
+            pushd "$project" > /dev/null
+            OUTPUT=$(fern generate --docs --preview --id "pr${PR_NUMBER}-${SAFE_PROJECT}" 2>&1) || true
+            popd > /dev/null
+            echo "$OUTPUT"
+            URL=$(echo "$OUTPUT" | grep -oP 'Published docs to \K.*(?= \()')
+
+            if [ -z "$URL" ]; then
+              continue
+            fi
+
+            BASE_URL=$(echo "$URL" | grep -oP 'https?://[^/]+')
+
+            MDX_CHANGES=$(echo "$PROJECT_CHANGES" | grep '\.mdx$' | sed "s|^${project}/||" || true)
+            PAGE_LINKS=""
+            if [ -n "$MDX_CHANGES" ]; then
+              FILES_PARAM=$(echo "$MDX_CHANGES" | tr '\n' ',' | sed 's/,$//')
+              RESPONSE=$(curl -sf -H "FERN_TOKEN: $FERN_TOKEN" "${URL}/api/fern-docs/get-slug-for-file?files=${FILES_PARAM}" 2>/dev/null) || true
+              if [ -n "$RESPONSE" ]; then
+                PAGE_LINKS=$(echo "$RESPONSE" | jq -r --arg url "$BASE_URL" \
+                  '.mappings[] | select(.slug != null) | "- [\(.slug)](\($url)/\(.slug))"' 2>/dev/null || true)
+              fi
+            fi
+
+            echo ":herb: **Preview \`${project}\`:** <${URL}>" >> comment.md
+            if [ -n "$PAGE_LINKS" ]; then
+              echo "" >> comment.md
+              echo "Here are the markdown pages you've updated:" >> comment.md
+              echo "$PAGE_LINKS" >> comment.md
+            fi
             echo "" >> comment.md
-            echo "Here are the markdown pages you've updated:" >> comment.md
-            echo "${{ steps.page-links.outputs.page_links }}" >> comment.md
+            HAS_CONTENT=true
+          done
+
+          if [ "$HAS_CONTENT" = false ]; then
+            echo ":herb: No docs changes detected in this PR." > comment.md
           fi
 
       - name: Post PR comment
-        uses: thollander/actions-comment-pull-request@v2.4.3
+        uses: thollander/actions-comment-pull-request@v3
         with:
-          filePath: comment.md
-          comment_tag: preview-docs-${{ matrix.project }}
+          file-path: comment.md
+          comment-tag: preview-docs
           mode: upsert
