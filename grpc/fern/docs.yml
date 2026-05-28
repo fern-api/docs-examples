@@ -34,6 +34,7 @@ navigation:
             path: docs/pages/api-reference-overview.mdx
             icon: fa-duotone fa-book
       - api: Plant Store gRPC API
+        flattened: true
 
 navbar-links:
   - type: minimal
