@@ -31,7 +31,7 @@ jobs:
           FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
           PR_NUMBER: ${{ github.event.pull_request.number }}
         run: |
-          PROJECTS="docs-starter graphql grpc i18n multi-source/homepage multi-source/seeds multi-source/seeds-sunflower multi-source/seeds-tomato multi-source/greenhouses multi-source/nursery versioning"
+          PROJECTS="docs-starter graphql grpc i18n multi-source/homepage multi-source/seeds multi-source/seeds-sunflower multi-source/seeds-tomato multi-source/greenhouses multi-source/nursery sse versioning"
           CHANGED_FILES=$(git diff --name-only origin/main...HEAD)
 
           : > comment.md

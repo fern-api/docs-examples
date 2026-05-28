@@ -1,0 +1,26 @@
+---
+title: SSE docs example
+subtitle: Generate API Reference documentation with server-sent events streaming
+slug: welcome
+---
+
+This example shows how [Fern](https://buildwithfern.com) generates interactive API Reference documentation for APIs that use server-sent events (SSE). It uses a sample Plant Store Streaming API with real-time sensor monitoring, order tracking, and a chat assistant with a `stream` parameter.
+
+Navigate to the [API Reference](/api-reference) tab to see the generated documentation.
+
+## What's included
+
+<Files>
+  <File name="docs.yml" comment="Configures navigation, theme, and hosting" />
+  <File name="fern.config.json" comment="Sets your organization name and CLI version" />
+  <File name="generators.yml" comment="Points to the OpenAPI spec" />
+  <File name="openapi.yaml" comment="Sample Plant Store API with SSE streaming endpoints" />
+  <Folder name="docs" defaultOpen>
+    <Folder name="pages" comment="Markdown content for your documentation" />
+    <Folder name="assets" comment="Logos, favicon, and other assets" />
+  </Folder>
+</Files>
+
+## Learn more
+
+For configuration details, see the [SSE streaming documentation](https://buildwithfern.com/learn/api-definition/openapi/endpoints/sse).
