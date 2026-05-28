@@ -1,0 +1,25 @@
+---
+title: API reference
+subtitle: Interactive documentation generated from an OpenAPI spec with SSE streaming
+slug: api-reference
+---
+
+Fern generates interactive API Reference documentation from your OpenAPI spec, including endpoints that use server-sent events (SSE). This example uses a sample Plant Store Streaming API to demonstrate the feature.
+
+The generated reference includes standard REST endpoints alongside SSE streaming endpoints, with the `x-fern-streaming` extension controlling how streaming is represented.
+
+## Plant Store Streaming API
+
+Browse the API endpoints in the sidebar, or jump to a section:
+
+<CardGroup cols={3}>
+  <Card title="Plants" icon="fa-duotone fa-leaf" href="/api-reference/plant/getPlant">
+    CRUD operations for managing plants
+  </Card>
+  <Card title="Orders" icon="fa-duotone fa-cart-shopping" href="/api-reference/order/placeOrder">
+    Place and retrieve plant orders
+  </Card>
+  <Card title="Streaming" icon="fa-duotone fa-tower-broadcast" href="/api-reference/streaming/monitorPlant">
+    Real-time SSE streaming endpoints
+  </Card>
+</CardGroup>

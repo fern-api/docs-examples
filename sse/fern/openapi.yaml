@@ -1,0 +1,431 @@
+openapi: 3.1.0
+servers:
+  - url: https://api.plantstore.dev/v1
+    description: Demo server
+info:
+  title: Plant Store Streaming API
+  version: 1.0.0
+  description: |
+    A sample Plant Store API that uses server-sent events (SSE) to stream
+    real-time updates for plant care monitoring, order tracking, and
+    inventory changes.
+paths:
+  /plants/{plantId}:
+    get:
+      tags:
+        - plant
+      summary: Get a plant by ID
+      operationId: getPlant
+      parameters:
+        - name: plantId
+          in: path
+          required: true
+          description: Unique identifier for the plant.
+          schema:
+            type: string
+      responses:
+        "200":
+          description: The requested plant.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Plant"
+              examples:
+                fern:
+                  summary: A fern plant
+                  value:
+                    id: "plt_001"
+                    name: "Boston Fern"
+                    species: "Nephrolepis exaltata"
+                    status: "healthy"
+                    moisture: 72
+                    light: 45
+                    temperature: 21.5
+        "404":
+          description: Plant not found.
+  /plants:
+    get:
+      tags:
+        - plant
+      summary: List all plants
+      operationId: listPlants
+      parameters:
+        - name: status
+          in: query
+          required: false
+          description: Filter by plant health status.
+          schema:
+            type: string
+            enum: [healthy, warning, critical]
+        - name: limit
+          in: query
+          required: false
+          description: Maximum number of results to return.
+          schema:
+            type: integer
+            default: 20
+      responses:
+        "200":
+          description: A list of plants.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  plants:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Plant"
+                  total:
+                    type: integer
+                    description: Total number of plants matching the filter.
+    post:
+      tags:
+        - plant
+      summary: Add a new plant
+      operationId: createPlant
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreatePlantRequest"
+            examples:
+              fern:
+                summary: Add a fern
+                value:
+                  name: "Maidenhair Fern"
+                  species: "Adiantum raddianum"
+      responses:
+        "201":
+          description: Plant created.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Plant"
+  /plants/{plantId}/monitor:
+    post:
+      tags:
+        - streaming
+      summary: Stream plant sensor readings
+      description: |
+        Opens a server-sent events stream that delivers real-time sensor
+        readings for a plant. Events include moisture, light, and
+        temperature data as they are recorded by the sensor.
+      operationId: monitorPlant
+      x-fern-streaming:
+        format: sse
+      parameters:
+        - name: plantId
+          in: path
+          required: true
+          description: Unique identifier for the plant to monitor.
+          schema:
+            type: string
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/MonitorRequest"
+      responses:
+        "200":
+          description: A stream of sensor reading events.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SensorReading"
+  /orders/{orderId}/track:
+    post:
+      tags:
+        - streaming
+      summary: Track order status updates
+      description: |
+        Opens a server-sent events stream that delivers real-time status
+        updates for an order. The stream emits an event each time the
+        order transitions to a new status and sends a `[DONE]` message
+        when the order reaches a terminal state.
+      operationId: trackOrder
+      x-fern-streaming:
+        format: sse
+        terminator: "[DONE]"
+      parameters:
+        - name: orderId
+          in: path
+          required: true
+          description: Unique identifier for the order to track.
+          schema:
+            type: string
+      responses:
+        "200":
+          description: A stream of order status events.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/OrderStatusEvent"
+        "404":
+          description: Order not found.
+  /plants/chat:
+    post:
+      tags:
+        - streaming
+      summary: Chat with the plant care assistant
+      description: |
+        Sends a question to the plant care assistant. When `stream` is
+        `true`, the response is delivered as server-sent events. When
+        `stream` is `false` or omitted, the full response is returned
+        as a single JSON object.
+      operationId: chatWithAssistant
+      x-fern-streaming:
+        format: sse
+        terminator: "[DONE]"
+        stream-condition: $request.stream
+        response:
+          $ref: "#/components/schemas/ChatResponse"
+        response-stream:
+          $ref: "#/components/schemas/ChatChunk"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ChatRequest"
+      responses:
+        "200":
+          description: The assistant's response (streamed or complete).
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ChatResponse"
+  /orders:
+    post:
+      tags:
+        - order
+      summary: Place a new order
+      operationId: placeOrder
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PlaceOrderRequest"
+            examples:
+              singlePlant:
+                summary: Order a single plant
+                value:
+                  items:
+                    - plantId: "plt_001"
+                      quantity: 2
+      responses:
+        "201":
+          description: Order placed.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Order"
+  /orders/{orderId}:
+    get:
+      tags:
+        - order
+      summary: Get an order by ID
+      operationId: getOrder
+      parameters:
+        - name: orderId
+          in: path
+          required: true
+          description: Unique identifier for the order.
+          schema:
+            type: string
+      responses:
+        "200":
+          description: The requested order.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Order"
+        "404":
+          description: Order not found.
+components:
+  schemas:
+    Plant:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the plant.
+        name:
+          type: string
+          description: Common name of the plant.
+        species:
+          type: string
+          description: Botanical (Latin) name.
+        status:
+          type: string
+          enum: [healthy, warning, critical]
+          description: Current health status.
+        moisture:
+          type: number
+          description: Latest soil moisture percentage.
+        light:
+          type: number
+          description: Latest light level in lux.
+        temperature:
+          type: number
+          description: Latest temperature in degrees Celsius.
+      required:
+        - id
+        - name
+        - species
+        - status
+    CreatePlantRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Common name of the plant.
+        species:
+          type: string
+          description: Botanical (Latin) name.
+      required:
+        - name
+        - species
+    MonitorRequest:
+      type: object
+      properties:
+        intervalSeconds:
+          type: integer
+          description: How often to emit sensor readings, in seconds.
+          default: 5
+        metrics:
+          type: array
+          items:
+            type: string
+            enum: [moisture, light, temperature]
+          description: Which sensor metrics to include. Defaults to all.
+    SensorReading:
+      type: object
+      properties:
+        plantId:
+          type: string
+          description: ID of the plant.
+        timestamp:
+          type: string
+          format: date-time
+          description: When the reading was taken.
+        moisture:
+          type: number
+          description: Soil moisture percentage.
+        light:
+          type: number
+          description: Light level in lux.
+        temperature:
+          type: number
+          description: Temperature in degrees Celsius.
+      required:
+        - plantId
+        - timestamp
+    Order:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the order.
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/OrderItem"
+          description: Items in the order.
+        status:
+          type: string
+          enum: [pending, confirmed, shipped, delivered, cancelled]
+          description: Current order status.
+        placedAt:
+          type: string
+          format: date-time
+          description: When the order was placed.
+      required:
+        - id
+        - items
+        - status
+    OrderItem:
+      type: object
+      properties:
+        plantId:
+          type: string
+          description: ID of the plant being ordered.
+        quantity:
+          type: integer
+          description: Number of units.
+      required:
+        - plantId
+        - quantity
+    PlaceOrderRequest:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/OrderItem"
+          description: Items to include in the order.
+      required:
+        - items
+    OrderStatusEvent:
+      type: object
+      properties:
+        orderId:
+          type: string
+          description: ID of the order.
+        previousStatus:
+          type: string
+          enum: [pending, confirmed, shipped, delivered, cancelled]
+          description: Previous order status.
+        newStatus:
+          type: string
+          enum: [pending, confirmed, shipped, delivered, cancelled]
+          description: New order status.
+        updatedAt:
+          type: string
+          format: date-time
+          description: When the status changed.
+      required:
+        - orderId
+        - newStatus
+        - updatedAt
+    ChatRequest:
+      type: object
+      properties:
+        message:
+          type: string
+          description: The user's question about plant care.
+        stream:
+          type: boolean
+          description: Whether to stream the response as SSE events.
+          default: false
+      required:
+        - message
+    ChatResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          description: The assistant's full response.
+        tokens:
+          type: integer
+          description: Number of tokens used.
+      required:
+        - message
+    ChatChunk:
+      type: object
+      properties:
+        delta:
+          type: string
+          description: A fragment of the assistant's response.
+      required:
+        - delta
+tags:
+  - name: plant
+    description: Manage plants in the store.
+  - name: order
+    description: Place and retrieve orders.
+  - name: streaming
+    description: Real-time streaming endpoints using server-sent events.
