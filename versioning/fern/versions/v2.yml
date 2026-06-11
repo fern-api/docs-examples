@@ -11,6 +11,12 @@ navigation:
     contents:
       - page: Migrating to Latest
         path: ./v2/pages/migration.mdx
+  - section: Bringing it Back
+    contents:
+      - page: Authentication
+        path: ./v2/pages/guides/authentication.mdx
+      - page: Webhooks
+        path: ./v2/pages/guides/webhooks.mdx
   - section: Resources
     contents:
       - page: Shared resource
