@@ -1,0 +1,12 @@
+---
+title: Winter watering schedules in the API
+slug: blog/winter-watering-schedules
+description: Seasonal watering plans now adjust for daylight hours and indoor humidity.
+tags: ["api", "plant-care"]
+author: mira
+image: ./images/winter-watering.jpg
+---
+
+The watering endpoint now accepts a greenhouse profile and a local date. It uses daylight hours and indoor humidity to calculate the next recommended watering window.
+
+Existing schedules continue to work without those fields. The response includes the inputs used for the recommendation so store operators can compare it with their manual plan.

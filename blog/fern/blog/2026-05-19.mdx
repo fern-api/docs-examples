@@ -1,0 +1,12 @@
+---
+title: Pruning reminders as webhooks
+slug: blog/pruning-webhooks
+description: Subscribe to per-plant pruning windows instead of polling the schedule endpoint.
+tags: ["api", "plant-care"]
+author: devon
+image: ./images/pruning-webhooks.jpg
+---
+
+The care service can now send pruning-window events to a configured webhook. Subscriptions are scoped to a plant and include the start date, end date, and required tool category.
+
+Delivery attempts use the same retry policy as order events. The event identifier remains stable across retries so receivers can safely de-duplicate updates.

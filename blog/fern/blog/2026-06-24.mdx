@@ -1,0 +1,13 @@
+---
+title: Shipping zones and frost dates
+slug: blog/shipping-zones-frost-dates
+description: Orders now validate against the destination's last frost date before checkout.
+tags: ["engineering"]
+author: mira
+image: ./images/shipping-zones.jpg
+excerpt: Live plants ship on a weather-dependent calendar, and the API now enforces it.
+---
+
+Live plants ship on a weather-dependent calendar, and the API now enforces it. Checkout compares the destination zone with the plant's shipping window before accepting an order.
+
+The validation response identifies the first eligible ship date and the rule that delayed the order. Dry goods continue to use the regular zone calendar.

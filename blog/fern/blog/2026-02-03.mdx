@@ -1,0 +1,12 @@
+---
+title: Rebuilding the seed catalog search index
+slug: blog/seed-catalog-search
+description: Cultivar synonyms, misspellings, and Latin names now resolve to one canonical seed.
+tags: ["engineering", "search"]
+author: devon
+image: ./images/seed-catalog.jpg
+---
+
+The seed catalog index now stores cultivar synonyms beside the canonical seed record. Search requests can match common misspellings and Latin names without duplicating catalog entries.
+
+The rebuild runs from the source catalog and writes a versioned index. Deployments switch indexes after validation, so an incomplete rebuild does not change search results.

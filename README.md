@@ -8,6 +8,7 @@ Example Fern docs projects. Each top-level folder is a self-contained example wi
 
 | Example | Description | Live demo |
 | --- | --- | --- |
+| [`blog`](./blog) | Blog layout with authors, tags, images, and RSS/Atom/JSON feeds | [blog.docs.buildwithfern.com](https://blog.docs.buildwithfern.com) |
 | [`docs-starter`](./docs-starter) | Minimal starter project | [docs-starter.docs.buildwithfern.com](https://docs-starter.docs.buildwithfern.com) |
 | [`graphql`](./graphql) | GraphQL API Reference from a `.graphql` schema | [graphql.docs.buildwithfern.com](https://graphql.docs.buildwithfern.com) |
 | [`grpc`](./grpc) | gRPC API Reference from `.proto` files | [grpc.docs.buildwithfern.com](https://grpc.docs.buildwithfern.com) |
