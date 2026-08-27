@@ -1,0 +1,16 @@
+/* Custom styles for the Plantstore blog example */
+
+/*
+ * blog-layout: list normally sizes the thumbnail to `height: 100%` of the
+ * row, with `aspect-ratio: auto`. Row height comes from the text column
+ * next to it, so anything that changes line-wrapping (a narrower window,
+ * a longer title, browser zoom) changes the image box's shape and how
+ * much of the photo gets cropped by object-fit: cover. Pin it to a fixed
+ * ratio instead so the crop stays consistent regardless of viewport width
+ * or zoom level.
+ */
+.fern-blog-card-list .fern-blog-card-image {
+  aspect-ratio: var(--aspect-video);
+  height: auto;
+  align-self: center;
+}

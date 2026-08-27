@@ -39,3 +39,5 @@ logo:
   height: 20
 
 favicon: ./assets/favicon.svg
+
+css: styles.css
