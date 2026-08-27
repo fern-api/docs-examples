@@ -1,0 +1,5 @@
+<svg width="132" height="20" viewBox="0 0 132 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M10 18c0-5 2-9 7-11-1 6-3 9-7 11z" fill="#008700"/>
+  <path d="M10 18C6 15 4 11 3 7c5 2 7 6 7 11z" fill="#0BA02C"/>
+  <text x="24" y="15" font-family="Inter, ui-sans-serif, system-ui, -apple-system, Helvetica, Arial, sans-serif" font-size="15" font-weight="600" fill="#111113">Plantstore</text>
+</svg>

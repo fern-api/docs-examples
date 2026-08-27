@@ -1,0 +1,14 @@
+---
+title: Streaming greenhouse sensor data
+slug: blog/greenhouse-sensor-streams
+description: Temperature and moisture readings are available over server-sent events.
+tags: ["api", "engineering"]
+authors:
+  - priya
+  - mira
+thumbnail: https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=1200&h=675&fit=crop
+---
+
+Greenhouse temperature and moisture readings are now available over a server-sent events endpoint. Each event includes the sensor identifier, reading time, and calibrated value.
+
+Clients can reconnect with the last event identifier after a network interruption. The service keeps a short replay window and closes idle connections after the configured timeout.

@@ -1,0 +1,41 @@
+# yaml-language-server: $schema=https://schema.buildwithfern.dev/docs-yml.json
+
+instances:
+  - url: blog.docs.buildwithfern.com
+
+title: Plantstore
+
+layout:
+  searchbar-placement: header
+  page-width: full
+
+navigation:
+  - section: Get started
+    contents:
+      - page: Overview
+        path: ./pages/overview.mdx
+        icon: fa-duotone fa-seedling
+  - blog: ./blog
+
+navbar-links:
+  - type: minimal
+    text: Fork this repo
+    url: https://github.com/fern-api/docs-examples
+  - type: filled
+    text: Dashboard
+    url: https://dashboard.buildwithfern.com
+
+colors:
+  accent-primary:
+    dark: "#70E155"
+    light: "#008700"
+  background:
+    dark: "#111113"
+    light: "#FFFFFF"
+
+logo:
+  dark: ./assets/logo-dark.svg
+  light: ./assets/logo.svg
+  height: 20
+
+favicon: ./assets/favicon.svg
