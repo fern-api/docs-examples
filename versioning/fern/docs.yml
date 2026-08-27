@@ -1,7 +1,7 @@
 # yaml-language-server: $schema=https://schema.buildwithfern.dev/docs-yml.json
 
 instances:
-  - url: versioning.docs.buildwithfern.com
+  - url: versioning.docs.buildwithfern.com/guides
 
 title: Fern Docs Versioned Example
 

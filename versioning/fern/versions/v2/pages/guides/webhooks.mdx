@@ -1,0 +1,17 @@
+---
+title: Webhooks
+subtitle: Receive real-time events from the API
+slug: guides/webhooks
+---
+
+Register a webhook endpoint in the dashboard. We'll POST a signed JSON payload to it whenever a subscribed event fires.
+
+```ts
+app.post("/webhook", (req, res) => {
+  verifySignature(req.headers["x-example-signature"], req.rawBody);
+  handle(req.body);
+  res.sendStatus(200);
+});
+```
+
+Respond with a 2xx within 5 seconds or the delivery will be retried with exponential backoff.
